@@ -56,7 +56,7 @@ export function Reports() {
       <div
         role="radiogroup"
         aria-label="Período"
-        className="border-line flex flex-wrap gap-1 self-start rounded-2xl border bg-white p-1.5"
+        className="border-line bg-surface flex flex-wrap gap-1 self-start rounded-2xl border p-1.5"
       >
         {PERIODS.map((p) => {
           const active = p.key === periodKey;

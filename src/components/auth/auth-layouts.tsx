@@ -30,7 +30,7 @@ function LegalLinks({ withHelp }: { withHelp?: boolean }) {
 function PreviewCard() {
   return (
     <div
-      className="border-line shadow-float w-full max-w-md rounded-[1.5rem] border bg-white p-8 text-left"
+      className="border-line shadow-float bg-surface w-full max-w-md rounded-[1.5rem] border p-8 text-left"
       aria-hidden
     >
       <p className="text-muted">Saldo do mês</p>
@@ -54,7 +54,7 @@ export function SplitAuthLayout({
   asideText: string;
 }) {
   return (
-    <div className="grid min-h-dvh bg-white lg:grid-cols-[1.27fr_1fr]">
+    <div className="bg-surface grid min-h-dvh lg:grid-cols-[1.27fr_1fr]">
       <div className="flex min-w-0 flex-col px-6 py-10 sm:px-12 lg:px-[8.5rem] lg:py-16">
         <Link href="/" aria-label="MiCash, página inicial" className="self-start">
           <Logo />
@@ -65,7 +65,7 @@ export function SplitAuthLayout({
         <LegalLinks />
       </div>
 
-      <aside className="relative hidden overflow-hidden bg-[#fbe9da] lg:flex lg:flex-col lg:items-center lg:justify-center lg:px-16">
+      <aside className="relative hidden overflow-hidden bg-[var(--mc-auth-aside)] lg:flex lg:flex-col lg:items-center lg:justify-center lg:px-16">
         <div className="bg-brand-200/70 absolute -top-24 -right-20 size-[24rem] rounded-full" aria-hidden />
         <div className="bg-brand-200/60 absolute -bottom-24 -left-24 size-[21rem] rounded-full" aria-hidden />
         <div className="relative flex flex-col items-center text-center">

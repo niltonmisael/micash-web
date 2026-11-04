@@ -15,11 +15,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="bg-cream min-h-dvh">
-      <aside className="border-line fixed inset-y-0 left-0 hidden w-[22.5rem] overflow-y-auto border-r bg-white lg:block">
+      <aside className="border-line bg-surface fixed inset-y-0 left-0 hidden w-[22.5rem] overflow-y-auto border-r lg:block">
         <Sidebar />
       </aside>
 
-      <header className="border-line sticky top-0 z-30 flex items-center justify-between border-b bg-white px-4 py-3 lg:hidden">
+      <header className="border-line bg-surface sticky top-0 z-30 flex items-center justify-between border-b px-4 py-3 lg:hidden">
         <Logo />
         <button
           type="button"
@@ -35,11 +35,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <button
-            className="bg-ink/40 absolute inset-0"
+            className="absolute inset-0 bg-black/55"
             aria-label="Fechar menu"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-[min(22.5rem,85vw)] overflow-y-auto bg-white">
+          <div className="bg-surface absolute inset-y-0 left-0 w-[min(22.5rem,85vw)] overflow-y-auto">
             <button
               type="button"
               onClick={() => setOpen(false)}

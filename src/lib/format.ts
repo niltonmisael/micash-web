@@ -87,3 +87,13 @@ export function maskEmail(email: string) {
   if (!domain) return email;
   return `${user.slice(0, 2)}***@${domain}`;
 }
+
+/** API DateTime (UTC) → "04/11/2026" on the Brasília calendar. */
+export function formatApiDate(iso: string) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    timeZone: TIME_ZONE,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(parseApiDate(iso));
+}

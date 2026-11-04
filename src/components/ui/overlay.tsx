@@ -82,14 +82,14 @@ export function Dialog({ open, onClose, title, children, variant = "modal", size
 
   return createPortal(
     <div className="fixed inset-0 z-50">
-      <div className="bg-ink/45 absolute inset-0" onClick={onClose} aria-hidden />
+      <div className="absolute inset-0 bg-black/55" onClick={onClose} aria-hidden />
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         className={clsx(
-          "absolute overflow-y-auto bg-white shadow-2xl",
+          "bg-surface absolute overflow-y-auto shadow-2xl",
           variant === "drawer"
             ? "inset-y-0 right-0 w-full max-w-[37.5rem] px-6 py-10 sm:px-11"
             : clsx(
@@ -207,7 +207,7 @@ export function ActionMenu({
         <div
           id={menuId}
           role="menu"
-          className="border-line absolute top-full right-0 z-20 mt-1 min-w-40 overflow-hidden rounded-2xl border bg-white py-2 shadow-xl"
+          className="border-line bg-surface absolute top-full right-0 z-20 mt-1 min-w-40 overflow-hidden rounded-2xl border py-2 shadow-xl"
         >
           {items.map((item) => (
             <button

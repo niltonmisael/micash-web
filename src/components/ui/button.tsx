@@ -7,7 +7,7 @@ type Variant = "primary" | "outline" | "ghost" | "link";
 
 const VARIANTS: Record<Variant, string> = {
   primary: "bg-brand-600 text-white hover:bg-brand-700 disabled:bg-brand-200",
-  outline: "border border-line bg-white text-ink hover:bg-brand-50",
+  outline: "border border-line bg-surface text-ink hover:bg-brand-50",
   ghost: "text-muted hover:bg-brand-50 hover:text-ink",
   link: "text-brand-700 hover:text-brand-800 font-semibold",
 };

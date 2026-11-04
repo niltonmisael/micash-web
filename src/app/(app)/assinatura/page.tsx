@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/app/coming-soon";
+import { Subscription } from "./subscription";
 
 export const metadata: Metadata = { title: "Assinatura" };
 
-export default function Page() {
-  return <ComingSoon title="Assinatura" subtitle="Gerencie seu plano e cobranças" />;
+export default function SubscriptionPage() {
+  return <Subscription />;
 }

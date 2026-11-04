@@ -64,7 +64,7 @@ export function Select({
       <label htmlFor={id} className={clsx("text-muted text-base font-medium", hideLabel && "sr-only")}>
         {label}
       </label>
-      <div className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 relative flex h-16 items-center rounded-2xl border bg-white focus-within:ring-4">
+      <div className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface relative flex h-16 items-center rounded-2xl border focus-within:ring-4">
         {LeadingIcon && (
           <LeadingIcon
             size="1.3rem"
@@ -96,16 +96,19 @@ export function Toggle({
   checked,
   onChange,
   label,
+  hideLabel,
   icon: LeadingIcon,
 }: {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: string;
+  /** Keeps the label for screen readers only (the row already shows the title). */
+  hideLabel?: boolean;
   icon?: Icon;
 }) {
   return (
     <label className="flex cursor-pointer items-center justify-between gap-4">
-      <span className="text-ink flex items-center gap-3 text-lg">
+      <span className={clsx("text-ink flex items-center gap-3 text-lg", hideLabel && "sr-only")}>
         {LeadingIcon && <LeadingIcon size="1.4rem" className="text-brand-700" aria-hidden />}
         {label}
       </span>
@@ -119,7 +122,7 @@ export function Toggle({
         />
         <span
           className={clsx(
-            "peer-focus-visible:ring-brand-500 block h-9 w-16 rounded-full transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2",
+            "peer-focus-visible:ring-brand-500 peer-focus-visible:ring-offset-surface block h-9 w-16 rounded-full transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2",
             checked ? "bg-brand-600" : "bg-line",
           )}
           aria-hidden

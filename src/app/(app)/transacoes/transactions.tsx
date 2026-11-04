@@ -114,7 +114,7 @@ export function Transactions() {
           label="Tipo"
           value={type}
           onChange={changeType}
-          className="border-line border bg-white"
+          className="border-line bg-surface border"
           options={[
             { value: "all", label: "Todas" },
             { value: TransactionType.Income, label: "Receitas" },
@@ -159,7 +159,7 @@ export function Transactions() {
             </optgroup>
           )}
         </Select>
-        <label className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 flex h-16 min-w-60 flex-1 items-center gap-3 rounded-2xl border bg-white px-4 focus-within:ring-4">
+        <label className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface flex h-16 min-w-60 flex-1 items-center gap-3 rounded-2xl border px-4 focus-within:ring-4">
           <IconSearch size="1.3rem" className="text-subtle" aria-hidden />
           <span className="sr-only">Buscar transação</span>
           <input

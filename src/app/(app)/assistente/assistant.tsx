@@ -217,7 +217,7 @@ export function Assistant() {
           >
             <ActionError error={sendError} />
             <div className="flex items-end gap-3">
-              <label className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 flex flex-1 rounded-2xl border bg-white px-5 py-3 focus-within:ring-4">
+              <label className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface flex flex-1 rounded-2xl border px-5 py-3 focus-within:ring-4">
                 <span className="sr-only">Pergunta para o Mi</span>
                 <textarea
                   ref={inputRef}

@@ -2,8 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { isEmailVerified } from "@/lib/jwt";
 
 /**
- * Routing only (no token refresh here: parallel prefetches would race on the rotating refresh token;
- * the browser refreshes on its first 401, see lib/api.ts).
+ * Routing only. The landing (/), /planos and the legal pages are public and not matched here.
+ * No token refresh here: parallel prefetches would race on the rotating refresh token; the browser
+ * refreshes on its first 401 (see lib/api.ts).
  * - App pages need a session (refresh cookie).
  * - Unverified e-mail → /verificar-email.
  * - Signed-in users are sent from the auth pages to the dashboard.
@@ -23,8 +24,6 @@ export function middleware(request: NextRequest) {
   const verified = accessToken ? isEmailVerified(accessToken) : undefined;
   const redirect = (path: string) => NextResponse.redirect(new URL(path, request.url));
 
-  if (pathname === "/") return redirect(hasSession ? "/dashboard" : "/entrar");
-
   if (AUTH_PAGES.includes(pathname)) {
     if (!hasSession) return NextResponse.next();
     return redirect(verified === false ? VERIFY_PAGE : "/dashboard");
@@ -43,7 +42,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/",
     "/entrar",
     "/cadastro",
     "/verificar-email",

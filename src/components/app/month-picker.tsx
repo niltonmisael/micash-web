@@ -15,7 +15,7 @@ export function MonthPicker({
 }) {
   const isCurrent = monthIndex(value) === monthIndex(currentYearMonth());
   return (
-    <div className="border-line flex h-16 items-center gap-2 rounded-2xl border bg-white px-3">
+    <div className="border-line bg-surface flex h-16 items-center gap-2 rounded-2xl border px-3">
       <button
         type="button"
         onClick={() => onChange(addMonths(value, -1))}

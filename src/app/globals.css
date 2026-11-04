@@ -1,41 +1,155 @@
 @import "tailwindcss";
 
 /*
- * MiCash design tokens (taken from Docs/MiCash-Web-Telas).
- * Light theme only for now, same as the prototypes and the mobile app.
+ * MiCash design tokens. Light values come from Docs/MiCash-Web-Telas; dark values are their counterparts.
+ * Tailwind classes (bg-surface, text-ink...) read the --mc-* variables below, so the theme is switched by
+ * changing variables only:
+ *   - no data-theme (or "system"): follows the operating system;
+ *   - data-theme="light" / "dark": the user's choice (see src/lib/theme.ts).
+ * Contrast: text tokens are AA (4.5:1) on surface in both themes; chart bar pairs were validated for CVD
+ * with the dataviz validator (light: #2f7d50/#e8957f, dark: #4aab76/#b9553f).
  */
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-50: #fef6ef;
-  --color-brand-100: #fde8d7;
-  --color-brand-200: #f9d3b4;
-  --color-brand-500: #f58a3c;
-  --color-brand-600: #df6d1f; /* button fill: white text 3.3:1 (large bold) */
-  --color-brand-700: #b8560f; /* orange text: 4.8:1 on white */
-  --color-brand-800: #9a470c;
+  --color-surface: var(--mc-surface);
+  --color-cream: var(--mc-cream);
+  --color-line: var(--mc-line);
+  --color-ink: var(--mc-ink);
+  --color-muted: var(--mc-muted);
+  --color-subtle: var(--mc-subtle);
 
-  --color-cream: #fdf6f0;
-  --color-line: #f1e6dc;
-  --color-ink: #2d2a26;
-  --color-muted: #7a716a;
-  --color-subtle: #a59c94;
+  --color-brand-50: var(--mc-brand-50);
+  --color-brand-100: var(--mc-brand-100);
+  --color-brand-200: var(--mc-brand-200);
+  --color-brand-500: var(--mc-brand-500);
+  --color-brand-600: var(--mc-brand-600);
+  --color-brand-700: var(--mc-brand-700);
+  --color-brand-800: var(--mc-brand-800);
 
-  --color-income: #2f7d50; /* text: 4.5:1+ on white */
-  --color-income-bar: #2f7d50; /* validated with the expense bar for CVD (dataviz validator) */
-  --color-income-soft: #e3f2e8;
+  --color-income: var(--mc-income);
+  --color-income-bar: var(--mc-income-bar);
+  --color-income-soft: var(--mc-income-soft);
 
-  --color-expense: #b4513a;
-  --color-expense-bar: #e8957f;
-  --color-expense-soft: #f9e3dd;
+  --color-expense: var(--mc-expense);
+  --color-expense-bar: var(--mc-expense-bar);
+  --color-expense-soft: var(--mc-expense-soft);
 
-  --color-warning: #e8a23c;
-  --color-warning-soft: #fcefd9;
-  --color-warning-ink: #8a5a00; /* text: 5.9:1 on white */
+  --color-warning: var(--mc-warning);
+  --color-warning-soft: var(--mc-warning-soft);
+  --color-warning-ink: var(--mc-warning-ink);
 
   --radius-card: 1.25rem;
-  --shadow-card: 0 1px 2px rgb(45 42 38 / 0.04);
-  --shadow-float: 0 24px 60px -20px rgb(196 98 28 / 0.25);
+  --shadow-card: var(--mc-shadow-card);
+  --shadow-float: var(--mc-shadow-float);
+}
+
+:root {
+  color-scheme: light;
+  --mc-surface: #ffffff;
+  --mc-cream: #fdf6f0;
+  --mc-line: #f1e6dc;
+  --mc-ink: #2d2a26;
+  --mc-muted: #7a716a;
+  --mc-subtle: #a59c94;
+
+  --mc-brand-50: #fef6ef;
+  --mc-brand-100: #fde8d7;
+  --mc-brand-200: #f9d3b4;
+  --mc-brand-500: #f58a3c;
+  --mc-brand-600: #df6d1f; /* button fill: white text 3.3:1 (large bold) */
+  --mc-brand-700: #b8560f; /* orange text: 4.8:1 on white */
+  --mc-brand-800: #9a470c;
+
+  --mc-income: #2f7d50;
+  --mc-income-bar: #2f7d50;
+  --mc-income-soft: #e3f2e8;
+  --mc-expense: #b4513a;
+  --mc-expense-bar: #e8957f;
+  --mc-expense-soft: #f9e3dd;
+  --mc-warning: #e8a23c;
+  --mc-warning-soft: #fcefd9;
+  --mc-warning-ink: #8a5a00;
+
+  --mc-auth-aside: #fbe9da;
+  --mc-chart-cursor: #fef6ef;
+  --mc-chart-others: #cfc6bd;
+
+  --mc-shadow-card: 0 1px 2px rgb(45 42 38 / 0.04);
+  --mc-shadow-float: 0 24px 60px -20px rgb(196 98 28 / 0.25);
+}
+
+/* Dark: explicit choice here; OS preference in the media query below (unless the user chose light). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --mc-surface: #211b17;
+  --mc-cream: #15110e;
+  --mc-line: #3a312a;
+  --mc-ink: #f2ebe4;
+  --mc-muted: #b3a89e;
+  --mc-subtle: #8c8178;
+
+  --mc-brand-50: #2a1f17;
+  --mc-brand-100: #3b2919;
+  --mc-brand-200: #5c3a1f;
+  --mc-brand-500: #f58a3c;
+  --mc-brand-600: #df6d1f;
+  --mc-brand-700: #f7a465; /* orange text: 8.5:1 on surface */
+  --mc-brand-800: #ffc08f;
+
+  --mc-income: #5fbf86;
+  --mc-income-bar: #4aab76;
+  --mc-income-soft: #183326;
+  --mc-expense: #f08a70;
+  --mc-expense-bar: #b9553f;
+  --mc-expense-soft: #3b211b;
+  --mc-warning: #e8a23c;
+  --mc-warning-soft: #3a2c14;
+  --mc-warning-ink: #f2c26b;
+
+  --mc-auth-aside: #2a1f17;
+  --mc-chart-cursor: #2a1f17;
+  --mc-chart-others: #6b6058;
+
+  --mc-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+  --mc-shadow-float: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --mc-surface: #211b17;
+    --mc-cream: #15110e;
+    --mc-line: #3a312a;
+    --mc-ink: #f2ebe4;
+    --mc-muted: #b3a89e;
+    --mc-subtle: #8c8178;
+
+    --mc-brand-50: #2a1f17;
+    --mc-brand-100: #3b2919;
+    --mc-brand-200: #5c3a1f;
+    --mc-brand-500: #f58a3c;
+    --mc-brand-600: #df6d1f;
+    --mc-brand-700: #f7a465;
+    --mc-brand-800: #ffc08f;
+
+    --mc-income: #5fbf86;
+    --mc-income-bar: #4aab76;
+    --mc-income-soft: #183326;
+    --mc-expense: #f08a70;
+    --mc-expense-bar: #b9553f;
+    --mc-expense-soft: #3b211b;
+    --mc-warning: #e8a23c;
+    --mc-warning-soft: #3a2c14;
+    --mc-warning-ink: #f2c26b;
+
+    --mc-auth-aside: #2a1f17;
+    --mc-chart-cursor: #2a1f17;
+    --mc-chart-others: #6b6058;
+
+    --mc-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+    --mc-shadow-float: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+  }
 }
 
 @layer base {
@@ -45,7 +159,6 @@
    * Percentages keep the user's browser font-size preference.
    */
   html {
-    color-scheme: light;
     font-size: 87.5%;
   }
 
@@ -63,5 +176,11 @@
   :focus-visible {
     outline: 2px solid var(--color-brand-500);
     outline-offset: 2px;
+  }
+
+  /* Native date/month pickers follow the theme. */
+  input[type="date"],
+  input[type="month"] {
+    color-scheme: inherit;
   }
 }

@@ -1,6 +1,14 @@
 /** micash-api JSON contracts used by the web (camelCase, as the API serializes them). */
 
-export type UserProfile = { name: string; email: string; emailVerified: boolean };
+/** `phone`: digits only ("11987654321"), empty when the account has none. */
+export type UserProfile = { name: string; email: string; emailVerified: boolean; phone: string };
+
+/** GET/PUT api/user/notification-preferences. */
+export type NotificationPreferences = {
+  monthlySummaryEmail: boolean;
+  monthlySummaryPush: boolean;
+  newsEmail: boolean;
+};
 
 export type CodeSent = {
   email: string;
@@ -87,7 +95,14 @@ export type CurrentSubscription = {
   accessEndsAt: string | null;
   paymentGraceUntil: string | null;
   cancelAtPeriodEnd: boolean;
+  /** Renews by itself on nextBillingDate (active and no cancellation scheduled). */
   autoRenew: boolean;
+  startsAt: string | null;
+  /** Day the scheduled cancellation happens (end of the paid period), UTC. */
+  cancellationScheduledFor: string | null;
+  price: number;
+  /** null on Free. */
+  billingPeriod: "Monthly" | "Yearly" | null;
 };
 
 export type PlanLimits = {

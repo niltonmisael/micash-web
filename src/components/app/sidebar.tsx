@@ -17,6 +17,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
+import { ThemeSwitcher } from "./theme-switcher";
 import { Logo } from "@/components/ui/logo";
 import { authApi } from "@/lib/api";
 import { useProfile, useSubscription } from "@/lib/queries";
@@ -81,6 +82,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             </ButtonLink>
           </div>
         )}
+        <ThemeSwitcher compact />
         <UserCard planLabel={isPremium ? "Premium" : isPremium === false ? "Plano Gratuito" : ""} />
       </div>
     </div>

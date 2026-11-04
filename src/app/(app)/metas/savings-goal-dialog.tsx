@@ -159,7 +159,7 @@ function SavingsGoalForm({ goal, onClose }: { goal?: SavingsGoal; onClose: () =>
               key={hex}
               title={CATEGORY_COLOR_LABELS[hex]}
               className={clsx(
-                "has-[:focus-visible]:ring-brand-500 grid size-14 cursor-pointer place-items-center rounded-full ring-offset-2 has-[:focus-visible]:ring-2",
+                "has-[:focus-visible]:ring-brand-500 ring-offset-surface grid size-14 cursor-pointer place-items-center rounded-full ring-offset-2 has-[:focus-visible]:ring-2",
                 color === hex && "ring-ink ring-2",
               )}
               style={{ background: hex }}

@@ -54,6 +54,28 @@ Pronto:
     - Segurança: troca de senha. A rota `/api/auth/change-password` refaz o login, porque a API derruba as sessões antigas.
     - Privacidade: termos, contato do DPO e exclusão de conta, bloqueada enquanto houver assinatura renovando.
 
+- **Tema claro/escuro:**
+  - O padrão segue o sistema operacional. A escolha fica salva no navegador e aparece no menu lateral e em Configurações > Perfil > Aparência.
+  - As cores são variáveis CSS com os dois temas (`src/app/globals.css`, `src/lib/theme.ts`).
+  - Os gráficos leem essas variáveis em tempo de execução.
+- **Configurações:**
+  - Perfil inclui o celular.
+  - Aba Notificações: resumo mensal por e-mail e no app, e "Novidades e ofertas" (desligado até a pessoa ativar).
+  - "Ajuda e suporte" em Privacidade.
+  - Usa `GET/PUT /api/user/notification-preferences`.
+
+- **Assinatura (`/assinatura`):**
+  - Free: uso do plano (metas, limites, perguntas ao Mi), oferta Premium com mensal/anual (preços de `GET /api/Plan`) e histórico.
+  - Checkout: `POST /api/Checkout` abre o Pagar.me em nova aba. A tela consulta `subscription/current` até o webhook liberar o Premium.
+  - Premium: próxima cobrança, cancelamento (mantém o Premium até o fim do período pago), "Manter o Premium" e aviso de pagamento recusado.
+
+- **Site público:**
+  - Página inicial (`/`): recursos, Mi Assistente, aplicativo, 3 passos, perguntas frequentes e chamada final.
+  - `/planos`: Gratuito × Premium com mensal/anual e comparativo.
+  - Preços renderizados no servidor a partir de `GET /api/Plan`.
+  - Benefícios e limites em `src/lib/plans.ts`: espelham `PlanLimits` da API, então mude os dois juntos.
+  - Para quem já tem sessão, o cabeçalho mostra "Ir para o painel".
+
 As demais telas do menu mostram "em breve".
 
 Os protótipos ficam em `Docs/MiCash-Web-Telas` e servem só como referência visual. Os textos de planos neles estão desatualizados; os limites reais vêm de `GET /api/subscription/limits`.

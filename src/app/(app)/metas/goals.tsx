@@ -58,7 +58,7 @@ export function Goals() {
         label="Tipo de meta"
         value={tab}
         onChange={(value) => router.replace(value === "limites" ? `${pathname}?tab=limites` : pathname)}
-        className="border-line self-start border bg-white"
+        className="border-line bg-surface self-start border"
         options={[
           { value: "economia", label: "Metas de economia" },
           { value: "limites", label: "Limites de gasto" },
