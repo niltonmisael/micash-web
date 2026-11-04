@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/*
+ * MiCash design tokens (taken from Docs/MiCash-Web-Telas).
+ * Light theme only for now, same as the prototypes and the mobile app.
+ */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #fef6ef;
+  --color-brand-100: #fde8d7;
+  --color-brand-200: #f9d3b4;
+  --color-brand-500: #f58a3c;
+  --color-brand-600: #df6d1f; /* button fill: white text 3.3:1 (large bold) */
+  --color-brand-700: #b8560f; /* orange text: 4.8:1 on white */
+  --color-brand-800: #9a470c;
+
+  --color-cream: #fdf6f0;
+  --color-line: #f1e6dc;
+  --color-ink: #2d2a26;
+  --color-muted: #7a716a;
+  --color-subtle: #a59c94;
+
+  --color-income: #2f7d50; /* text: 4.5:1+ on white */
+  --color-income-bar: #2f7d50; /* validated with the expense bar for CVD (dataviz validator) */
+  --color-income-soft: #e3f2e8;
+
+  --color-expense: #b4513a;
+  --color-expense-bar: #e8957f;
+  --color-expense-soft: #f9e3dd;
+
+  --color-warning: #e8a23c;
+  --color-warning-soft: #fcefd9;
+  --color-warning-ink: #8a5a00; /* text: 5.9:1 on white */
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(45 42 38 / 0.04);
+  --shadow-float: 0 24px 60px -20px rgb(196 98 28 / 0.25);
+}
+
+@layer base {
+  /*
+   * Fluid scale: the prototypes were drawn on a 1920px screen. Everything is in rem, so the root
+   * size scales the whole layout: 100% at 1920px+, 80% (floor) at 1536px and below.
+   * Percentages keep the user's browser font-size preference.
+   */
+  html {
+    color-scheme: light;
+    font-size: 87.5%;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: clamp(80%, 0.834vw, 100%);
+    }
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+}
