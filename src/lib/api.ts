@@ -84,7 +84,7 @@ async function send(url: string, { method = "GET", body }: RequestOptions) {
 }
 
 /**
- * Calls a micash-api route through the proxy, e.g. api("api/Dashboard/monthly-summary", { query }).
+ * Calls a micash-api route through the proxy, e.g. api("api/dashboard/monthly-summary", { query }).
  * 401 → one refresh and one retry, then the login page. 403 EMAIL_NOT_VERIFIED → verification page.
  */
 export async function api<T>(path: string, options: RequestOptions = {}): Promise<T> {

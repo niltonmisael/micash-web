@@ -47,7 +47,7 @@ export function useCategories() {
   return useQuery({
     queryKey: ["categories"],
     queryFn: async () =>
-      (await api<{ categories: Category[] } | undefined>("api/Category/all"))?.categories.filter(
+      (await api<{ categories: Category[] } | undefined>("api/category/all"))?.categories.filter(
         (c) => c.isActive,
       ) ?? [],
   });
@@ -62,12 +62,12 @@ export function invalidateEntries(client: QueryClient) {
 
 export function saveExpense(body: ExpenseRequest, id?: number) {
   return id
-    ? api(`api/Expense/${id}`, { method: "PUT", body })
-    : api("api/Expense", { method: "POST", body });
+    ? api(`api/expense/${id}`, { method: "PUT", body })
+    : api("api/expense", { method: "POST", body });
 }
 
 export function saveIncome(body: IncomeRequest, id?: number) {
-  return id ? api(`api/Income/${id}`, { method: "PUT", body }) : api("api/Income", { method: "POST", body });
+  return id ? api(`api/income/${id}`, { method: "PUT", body }) : api("api/income", { method: "POST", body });
 }
 
 export function deleteTransaction(transaction: Pick<Transaction, "id" | "type">) {
@@ -79,11 +79,11 @@ export type CategoryRequest = { name: string; color: string; icon: string };
 
 export function saveCategory(body: CategoryRequest, id?: number) {
   return id
-    ? api(`api/Category/${id}`, { method: "PUT", body })
-    : api("api/Category/create", { method: "POST", body });
+    ? api(`api/category/${id}`, { method: "PUT", body })
+    : api("api/category/create", { method: "POST", body });
 }
 
 /** The API only inactivates the category: its expenses keep showing it. */
 export function deleteCategory(id: number) {
-  return api(`api/Category/${id}`, { method: "DELETE" });
+  return api(`api/category/${id}`, { method: "DELETE" });
 }

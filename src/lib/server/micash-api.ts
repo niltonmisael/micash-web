@@ -7,7 +7,7 @@ function apiBaseUrl() {
   return url;
 }
 
-/** Calls micash-api from the server. `path` is the API path, e.g. "/login" or "/api/Dashboard/monthly-summary". */
+/** Calls micash-api from the server. `path` is the API path, e.g. "/login" or "/api/dashboard/monthly-summary". */
 export function callApi(path: string, init: RequestInit & { accessToken?: string } = {}) {
   const { accessToken, headers, ...rest } = init;
   const finalHeaders = new Headers(headers);

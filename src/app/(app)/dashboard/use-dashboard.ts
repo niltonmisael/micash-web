@@ -12,14 +12,14 @@ export function useLatestExpenses(count = 4) {
   return useQuery({
     queryKey: ["dashboard", "latest-expenses", count],
     queryFn: async () =>
-      (await api<LatestExpense[] | undefined>("api/Dashboard/lastest-expenses", { query: { count } })) ?? [],
+      (await api<LatestExpense[] | undefined>("api/dashboard/lastest-expenses", { query: { count } })) ?? [],
   });
 }
 
 export function useInsights({ year, month }: YearMonth) {
   return useQuery({
     queryKey: ["insights", year, month],
-    queryFn: () => api<FinancialInsights>("api/FinancialInsights", { query: { year, month } }),
+    queryFn: () => api<FinancialInsights>("api/financial-insights", { query: { year, month } }),
     staleTime: 5 * 60_000,
   });
 }

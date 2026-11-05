@@ -8,7 +8,7 @@ import { formatMoney } from "@/lib/format";
 import { FREE_FEATURES, PREMIUM_FEATURES } from "@/lib/plans";
 import type { BillingPeriod, Plan } from "@/lib/subscription";
 
-/** Gratuito vs Premium cards with the Mensal/Anual switch. Prices come from GET /api/Plan (server). */
+/** Gratuito vs Premium cards with the Mensal/Anual switch. Prices come from GET /api/plan (server). */
 export function Pricing({ plans }: { plans: Plan[] }) {
   const cheapest = (period: BillingPeriod) =>
     plans.filter((p) => p.billingPeriod === period).sort((a, b) => a.price - b.price)[0];

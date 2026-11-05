@@ -37,7 +37,7 @@ export function useMonthlySeries(last: YearMonth, count: number): MonthBar[] {
   const results = useQueries({
     queries: months.map((month) => ({
       queryKey: ["dashboard", "monthly-summary", month.year, month.month],
-      queryFn: () => api<MonthlySummary>("api/Dashboard/monthly-summary", { query: ym(month) }),
+      queryFn: () => api<MonthlySummary>("api/dashboard/monthly-summary", { query: ym(month) }),
     })),
   });
 
@@ -52,7 +52,7 @@ export function useMonthlySeries(last: YearMonth, count: number): MonthBar[] {
 export function useExpensesByCategory(month: YearMonth) {
   return useQuery({
     queryKey: ["dashboard", "expenses-by-category", month.year, month.month],
-    queryFn: () => api<ExpenseCategorySummary[]>("api/Dashboard/expenses-by-category", { query: ym(month) }),
+    queryFn: () => api<ExpenseCategorySummary[]>("api/dashboard/expenses-by-category", { query: ym(month) }),
   });
 }
 
@@ -62,7 +62,7 @@ export function useExpensesByCategoryOver(months: YearMonth[]) {
     queries: months.map((month) => ({
       queryKey: ["dashboard", "expenses-by-category", month.year, month.month],
       queryFn: () =>
-        api<ExpenseCategorySummary[]>("api/Dashboard/expenses-by-category", { query: ym(month) }),
+        api<ExpenseCategorySummary[]>("api/dashboard/expenses-by-category", { query: ym(month) }),
     })),
   });
 
@@ -91,7 +91,7 @@ export function useExpensesByCategoryOver(months: YearMonth[]) {
 export function useDailySummary(month: YearMonth, enabled = true) {
   return useQuery({
     queryKey: ["dashboard", "daily-summary", month.year, month.month],
-    queryFn: () => api<DailySummary>("api/Dashboard/daily-summary", { query: ym(month) }),
+    queryFn: () => api<DailySummary>("api/dashboard/daily-summary", { query: ym(month) }),
     enabled,
   });
 }

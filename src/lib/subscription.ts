@@ -15,7 +15,7 @@ export enum SubscriptionStatus {
 
 export type BillingPeriod = "Monthly" | "Yearly";
 
-/** GET /api/Plan (public): the plans sold on the web, with the Pagar.me price. */
+/** GET /api/plan (public): the plans sold on the web, with the Pagar.me price. */
 export type Plan = { id: number; name: string; price: number; billingPeriod: BillingPeriod };
 
 export type SubscriptionHistoryItem = {
@@ -32,7 +32,7 @@ export type SubscriptionHistoryItem = {
 export function usePlans() {
   return useQuery({
     queryKey: ["plans"],
-    queryFn: async () => ((await api<Plan[] | undefined>("api/Plan")) ?? []).filter((p) => p.price > 0),
+    queryFn: async () => ((await api<Plan[] | undefined>("api/plan")) ?? []).filter((p) => p.price > 0),
     staleTime: 10 * 60_000,
   });
 }
@@ -45,11 +45,11 @@ export function useSubscriptionHistory() {
 }
 
 /**
- * POST /api/Checkout: the Pagar.me payment link of the plan. Premium is turned on by the Pagar.me webhook,
+ * POST /api/checkout: the Pagar.me payment link of the plan. Premium is turned on by the Pagar.me webhook,
  * not by this call. 400 when there is an active subscription or a payment still being processed.
  */
 export async function createCheckout(planId: number) {
-  return (await api<{ checkoutUrl: string }>("api/Checkout", { method: "POST", body: { planId } }))
+  return (await api<{ checkoutUrl: string }>("api/checkout", { method: "POST", body: { planId } }))
     .checkoutUrl;
 }
 
