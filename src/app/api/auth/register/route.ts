@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { sessionFromApi } from "@/lib/server/auth-response";
-import { apiUnavailable, errorJson, postJson } from "@/lib/server/micash-api";
+import { apiUnavailable, clientIp, errorJson, postJson } from "@/lib/server/micash-api";
 import { isSameOrigin } from "@/lib/server/session";
 
 export async function POST(request: NextRequest) {
@@ -15,7 +15,11 @@ export async function POST(request: NextRequest) {
 
   try {
     // The API opens a session right away (emailVerified: false) so the user can confirm the code.
-    const apiResponse = await postJson("/api/user/register", { name, email, password, phone: phone ?? "" });
+    const apiResponse = await postJson(
+      "/api/user/register",
+      { name, email, password, phone: phone ?? "" },
+      { clientIp: clientIp(request) },
+    );
     return await sessionFromApi(apiResponse, true);
   } catch {
     return apiUnavailable();

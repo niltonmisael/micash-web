@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { sessionFromApi } from "@/lib/server/auth-response";
-import { apiUnavailable, errorJson, postJson } from "@/lib/server/micash-api";
+import { apiUnavailable, clientIp, errorJson, postJson } from "@/lib/server/micash-api";
 import { isSameOrigin } from "@/lib/server/session";
 
 export async function POST(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   };
 
   try {
-    const apiResponse = await postJson("/login", { email, password });
+    const apiResponse = await postJson("/login", { email, password }, { clientIp: clientIp(request) });
     return await sessionFromApi(apiResponse, remember === true);
   } catch {
     return apiUnavailable();

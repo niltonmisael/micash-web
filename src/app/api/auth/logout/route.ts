@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { errorJson, postJson } from "@/lib/server/micash-api";
+import { clientIp, errorJson, postJson } from "@/lib/server/micash-api";
 import { clearSession, isSameOrigin, readSession } from "@/lib/server/session";
 
 export async function POST(request: NextRequest) {
@@ -8,7 +8,9 @@ export async function POST(request: NextRequest) {
   const { accessToken, refreshToken } = readSession(request);
   if (refreshToken) {
     // Best effort: revokes the refresh token at the API. The cookies are cleared either way.
-    await postJson("/logout", { refreshToken }, accessToken).catch(() => undefined);
+    await postJson("/logout", { refreshToken }, { accessToken, clientIp: clientIp(request) }).catch(
+      () => undefined,
+    );
   }
 
   const response = new NextResponse(null, { status: 204 });

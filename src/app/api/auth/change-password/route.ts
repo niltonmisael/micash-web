@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { sessionFromApi } from "@/lib/server/auth-response";
-import { apiUnavailable, callApi, errorJson, postJson, relay } from "@/lib/server/micash-api";
+import { apiUnavailable, callApi, clientIp, errorJson, postJson, relay } from "@/lib/server/micash-api";
 import { isAccessTokenUsable, isSameOrigin, readSession } from "@/lib/server/session";
 
 /**
@@ -20,16 +20,22 @@ export async function POST(request: NextRequest) {
     newPassword?: string;
   };
 
+  const ip = clientIp(request);
+
   try {
     const changed = await callApi("/api/user/change-password", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password, newPassword }),
       accessToken,
+      clientIp: ip,
     });
     if (!changed.ok) return await relay(changed);
 
-    return await sessionFromApi(await postJson("/login", { email, password: newPassword }), remember);
+    return await sessionFromApi(
+      await postJson("/login", { email, password: newPassword }, { clientIp: ip }),
+      remember,
+    );
   } catch {
     return apiUnavailable();
   }

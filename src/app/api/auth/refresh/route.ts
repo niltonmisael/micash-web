@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server";
 import { sessionFromApi } from "@/lib/server/auth-response";
-import { apiUnavailable, errorJson, postJson } from "@/lib/server/micash-api";
+import { apiUnavailable, clientIp, errorJson, postJson } from "@/lib/server/micash-api";
 import { isSameOrigin, readSession } from "@/lib/server/session";
 
 /**
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   if (!refreshToken) return errorJson(401, "Sessão expirada.", "SESSION_EXPIRED");
 
   try {
-    const apiResponse = await postJson("/refresh", { refreshToken });
+    const apiResponse = await postJson("/refresh", { refreshToken }, { clientIp: clientIp(request) });
     return await sessionFromApi(apiResponse, remember, { clearOnError: true });
   } catch {
     return apiUnavailable();

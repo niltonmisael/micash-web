@@ -28,7 +28,7 @@ import { Alert, Card, Skeleton } from "@/components/ui/misc";
 import { Dialog } from "@/components/ui/overlay";
 import { OtpInput } from "@/components/ui/otp-input";
 import { api, ApiError, authApi, errorMessage } from "@/lib/api";
-import { maskEmail } from "@/lib/format";
+import { formatApiDate, maskEmail } from "@/lib/format";
 import { isStrongPassword, PASSWORD_ERROR } from "@/lib/password";
 import { formatPhone, isValidMobile, phoneDigits } from "@/lib/phone";
 import { useProfile, useSubscription } from "@/lib/queries";
@@ -650,26 +650,26 @@ function PrivacyRow({
   );
 }
 
-const CONFIRM_WORD = "EXCLUIR";
-
+/**
+ * Deleting asks for the current password (an open session alone is not enough). A Premium subscription is
+ * canceled at Pagar.me by the API before the account is deleted; the paid period left is lost (no refund).
+ */
 function DeleteAccountDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const router = useRouter();
   const subscription = useSubscription();
-  const [typed, setTyped] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
 
-  // The API deletes the account without cancelling the Pagar.me subscription: a renewing subscription
-  // must be cancelled first, or it would keep charging the card.
-  const renewing = Boolean(
-    subscription.data?.isPremium && subscription.data.autoRenew && !subscription.data.cancelAtPeriodEnd,
-  );
+  const premium = subscription.data?.isPremium ? subscription.data : undefined;
+  const paidUntil = premium?.accessEndsAt ?? premium?.nextBillingDate;
 
   const remove = async () => {
     setError(undefined);
     setLoading(true);
     try {
-      await api("api/user/delete", { method: "DELETE" });
+      await api("api/user/delete", { method: "DELETE", body: { password } });
+      // The API already revoked everything; this only clears this browser's cookies.
       await authApi("logout").catch(() => undefined);
       router.replace("/entrar");
       router.refresh();
@@ -683,47 +683,52 @@ function DeleteAccountDialog({ open, onClose }: { open: boolean; onClose: () => 
     <Dialog open={open} onClose={onClose} title="Excluir minha conta" size="sm">
       {subscription.isPending ? (
         <Skeleton className="h-32" />
-      ) : renewing ? (
-        <div className="flex flex-col gap-5">
-          <Alert tone="info">
-            Você tem uma assinatura Premium com renovação automática. Cancele a assinatura antes de excluir a
-            conta, para não haver novas cobranças.
-          </Alert>
-          <Link
-            href="/assinatura"
-            className="text-brand-700 hover:text-brand-800 self-start text-lg font-semibold"
-          >
-            Ir para Assinatura
-          </Link>
-        </div>
       ) : (
-        <div className="flex flex-col gap-5">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (password) void remove();
+          }}
+          noValidate
+          className="flex flex-col gap-5"
+        >
           <p className="text-muted text-lg leading-relaxed">
             Sua conta e todos os seus dados (transações, categorias, metas e conversas com o Mi) serão
             apagados definitivamente. Essa ação não pode ser desfeita.
           </p>
+          {premium && (
+            <Alert tone="info">
+              Sua assinatura Premium será cancelada agora, sem novas cobranças.
+              {paidUntil
+                ? ` O acesso que iria até ${formatApiDate(paidUntil)} será perdido,`
+                : " O período restante será perdido,"}{" "}
+              sem reembolso.
+            </Alert>
+          )}
           <Field
-            label={`Para confirmar, digite ${CONFIRM_WORD}`}
-            value={typed}
-            onChange={(e) => setTyped(e.target.value)}
-            autoComplete="off"
+            label="Para confirmar, digite sua senha"
+            type="password"
+            icon={IconLock}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
             autoFocus
           />
           {error && <Alert>{error}</Alert>}
           <div className="flex flex-wrap justify-end gap-3">
-            <Button variant="outline" onClick={onClose} disabled={loading}>
+            <Button type="button" variant="outline" onClick={onClose} disabled={loading}>
               Cancelar
             </Button>
             <Button
-              onClick={remove}
+              type="submit"
               loading={loading}
-              disabled={typed.trim().toUpperCase() !== CONFIRM_WORD}
+              disabled={!password}
               className="bg-expense hover:bg-expense/90"
             >
               Excluir conta
             </Button>
           </div>
-        </div>
+        </form>
       )}
     </Dialog>
   );

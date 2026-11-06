@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { apiUnavailable, callApi, errorJson, relay } from "@/lib/server/micash-api";
+import { apiUnavailable, callApi, clientIp, errorJson, relay } from "@/lib/server/micash-api";
 import { isAccessTokenUsable, isSameOrigin, readSession } from "@/lib/server/session";
 
 /**
@@ -41,6 +41,7 @@ async function forward(request: NextRequest, { params }: Context) {
       headers: hasBody ? { "Content-Type": request.headers.get("Content-Type") ?? "application/json" } : {},
       body: hasBody ? await request.text() : undefined,
       accessToken: usableToken,
+      clientIp: clientIp(request),
     });
     return await relay(apiResponse);
   } catch {
