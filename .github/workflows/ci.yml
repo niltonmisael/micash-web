@@ -1,0 +1,67 @@
+
+name: MiCash Web - CI
+
+on:
+  # Executa quando uma PR é aberta ou atualizada
+  pull_request:
+    branches:
+      - develop
+      - main
+
+  # Executa após alterações nas branches principais
+  push:
+    branches:
+      - develop
+      - main
+
+  # Permite execução manual
+  workflow_dispatch:
+
+# Cancela execuções anteriores da mesma branch/PR
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-quality:
+    name: Code Quality & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixar código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      # 3. Habilitar Corepack
+      - name: Enable Corepack
+        run: corepack enable
+
+      # 4. Instalar dependências
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # 5. Validar formatação
+      - name: Check formatting
+        run: yarn format:check
+
+      # 6. Análise estática
+      - name: Run ESLint
+        run: yarn lint
+
+      # 7. Verificar tipagem
+      - name: TypeScript validation
+        run: yarn typecheck
+
+      # 8. Build de produção
+      - name: Production build
+        run: yarn build
