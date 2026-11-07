@@ -384,7 +384,10 @@ function PhoneFrame({ className, children }: { className?: string; children: Rea
 
 function PhonePreview() {
   return (
-    <div className="relative mx-auto flex h-[33rem] w-full max-w-md items-center justify-center sm:h-[36rem]" aria-hidden>
+    <div
+      className="relative mx-auto flex h-[33rem] w-full max-w-md items-center justify-center sm:h-[36rem]"
+      aria-hidden
+    >
       {/* Dashboard */}
       <PhoneFrame className="absolute top-0 left-0 -rotate-6 sm:left-2">
         <p className="text-muted text-xs">Olá, Nilton</p>
