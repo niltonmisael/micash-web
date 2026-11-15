@@ -59,7 +59,7 @@ export function OtpInput({ value, onChange, length = 6, disabled, invalid, autoF
             else if (e.key === "ArrowRight") focus(index + 1);
           }}
           className={clsx(
-            "bg-brand-50 text-ink focus:border-brand-500 size-14 rounded-2xl border text-center text-3xl font-bold outline-none sm:h-24 sm:w-[5.25rem] sm:text-4xl",
+            "figure bg-surface text-ink focus:border-brand-500 focus:ring-brand-100 size-13 rounded-xl border text-center text-2xl font-bold outline-none focus:ring-4 sm:h-18 sm:w-16 sm:text-[2rem]",
             invalid ? "border-expense" : "border-line",
           )}
         />

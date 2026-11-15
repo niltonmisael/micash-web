@@ -106,7 +106,7 @@ export function VerifyEmail() {
           <Button type="submit" block loading={submitting} disabled={code.length !== CODE_LENGTH}>
             Confirmar e-mail
           </Button>
-          <div className="text-muted flex flex-col items-center gap-3 text-lg">
+          <div className="text-muted flex flex-col items-center gap-3 text-base">
             <p>
               Não recebeu?{" "}
               {secondsLeft > 0 ? (
@@ -191,7 +191,7 @@ function ChangeEmailForm({
       <Button type="submit" block loading={saving}>
         Enviar código para este e-mail
       </Button>
-      <Button type="button" variant="link" onClick={onCancel} className="self-center text-lg">
+      <Button type="button" variant="link" onClick={onCancel} className="self-center text-base">
         Voltar
       </Button>
     </form>

@@ -24,23 +24,23 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
 
   return (
     <div className={clsx("flex flex-col gap-2", className)}>
-      <label htmlFor={inputId} className="text-muted text-base font-medium">
+      <label htmlFor={inputId} className="text-ink text-sm font-medium">
         {label}
       </label>
       <div
         className={clsx(
-          "bg-brand-50 focus-within:border-brand-500 focus-within:ring-brand-100 flex h-[4.25rem] items-center gap-3 rounded-2xl border px-5 transition-colors focus-within:ring-4",
-          error ? "border-expense" : "border-line",
+          "bg-surface focus-within:border-brand-500 focus-within:ring-brand-100 flex h-13 items-center gap-3 rounded-xl border px-4 transition-colors focus-within:ring-4",
+          error ? "border-expense" : "border-line hover:border-subtle",
         )}
       >
-        {LeadingIcon && <LeadingIcon className="text-subtle shrink-0" size="1.375rem" aria-hidden />}
+        {LeadingIcon && <LeadingIcon className="text-subtle shrink-0" size="1.25rem" aria-hidden />}
         <input
           ref={ref}
           id={inputId}
           type={isPassword && visible ? "text" : type}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
-          className="text-ink placeholder:text-subtle h-full w-full bg-transparent text-lg outline-none focus-visible:outline-none"
+          className="text-ink placeholder:text-subtle h-full w-full bg-transparent text-base outline-none focus-visible:outline-none"
           {...props}
         />
         {isPassword && (

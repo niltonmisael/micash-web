@@ -10,8 +10,8 @@ export default function RegisterPage() {
       asideTitle="Comece em um minuto"
       asideText="Cadastre-se e registre sua primeira receita ou despesa hoje mesmo."
     >
-      <h1 className="text-ink text-5xl font-bold tracking-tight">Crie sua conta</h1>
-      <p className="text-muted mt-4 text-xl">Grátis, sem cartão de crédito.</p>
+      <h1 className="text-ink text-[2.4rem] leading-[1.05] font-bold sm:text-[2.9rem]">Crie sua conta</h1>
+      <p className="text-muted mt-3 text-lg">Grátis, sem cartão de crédito.</p>
       <RegisterForm />
     </SplitAuthLayout>
   );

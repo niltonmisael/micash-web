@@ -93,7 +93,7 @@ export function Subscription() {
   const subscription = current.data;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-7">
       <PageHeader title="Assinatura" subtitle="Gerencie seu plano e cobranças" />
 
       {awaitingSince > 0 && !subscription?.isPremium && (
@@ -153,7 +153,7 @@ function FreeUsageCard() {
     : [];
 
   return (
-    <Card className="p-8">
+    <Card className="p-7">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-muted">Seu plano atual</p>
@@ -169,7 +169,7 @@ function FreeUsageCard() {
             const percent = row.max ? (row.used / row.max) * 100 : 0;
             return (
               <li key={row.label}>
-                <div className="flex justify-between gap-4 text-lg">
+                <div className="flex justify-between gap-4 text-base">
                   <span className="text-ink">{row.label}</span>
                   <span className="text-muted tabular-nums">
                     <strong className="text-ink">{Math.min(row.used, row.max ?? row.used)}</strong> /{" "}
@@ -235,15 +235,17 @@ function OfferCard({ onCheckoutOpened, awaiting }: { onCheckoutOpened: () => voi
   };
 
   return (
-    <Card className="shadow-float self-start border-0 bg-gradient-to-br from-[#b8560f] to-[#9a470c] p-8 text-white">
-      <p className="flex items-center gap-2 text-xl font-semibold">
-        <IconCrown size="1.4rem" aria-hidden /> Premium
+    <Card className="bg-rail text-rail-ink self-start p-7 sm:p-8">
+      <p className="flex items-center gap-2 text-lg font-semibold">
+        <IconCrown size="1.3rem" className="text-brand-500" aria-hidden /> Premium
       </p>
 
       {plans.isPending ? (
-        <Skeleton className="mt-6 h-24 bg-white/20" />
+        <Skeleton className="bg-rail-raised mt-6 h-24" />
       ) : !selected ? (
-        <p className="mt-6 text-lg">Os planos estão indisponíveis no momento. Tente novamente mais tarde.</p>
+        <p className="mt-6 text-base">
+          Os planos estão indisponíveis no momento. Tente novamente mais tarde.
+        </p>
       ) : (
         <>
           {monthly && yearly && (
@@ -251,8 +253,9 @@ function OfferCard({ onCheckoutOpened, awaiting }: { onCheckoutOpened: () => voi
               label="Periodicidade"
               value={period}
               onChange={setPeriod}
-              className="mt-6 bg-white/15"
-              activeClass="bg-white text-[#9a470c]"
+              className="bg-rail-raised mt-6"
+              activeClass="bg-rail-ink text-rail"
+              inactiveClass="text-rail-muted hover:text-rail-ink"
               options={[
                 { value: "Monthly", label: <span className="text-inherit">Mensal</span> },
                 {
@@ -262,20 +265,24 @@ function OfferCard({ onCheckoutOpened, awaiting }: { onCheckoutOpened: () => voi
               ]}
             />
           )}
-          <p className="mt-6 text-[3.2rem] leading-none font-bold tracking-tight">
+          <p className="figure mt-7 text-[3.2rem] leading-none font-bold">
             {formatMoney(selected.price)}
-            <span className="text-2xl font-semibold">/{PERIOD_LABEL[selected.billingPeriod]}</span>
+            <span className="text-rail-muted font-sans text-xl font-medium tracking-normal">
+              /{PERIOD_LABEL[selected.billingPeriod]}
+            </span>
           </p>
           {selected.billingPeriod === "Yearly" && (
-            <p className="mt-2 text-lg">Equivale a {formatMoney(selected.price / 12)} por mês</p>
+            <p className="text-rail-muted mt-2 text-base">
+              Equivale a {formatMoney(selected.price / 12)} por mês
+            </p>
           )}
         </>
       )}
 
-      <ul className="mt-6 flex flex-col gap-3">
+      <ul className="border-rail-line mt-7 flex flex-col border-t">
         {PREMIUM_BENEFITS.map((benefit) => (
-          <li key={benefit} className="flex items-start gap-3 text-lg">
-            <IconCheck size="1.3rem" className="mt-1 shrink-0" aria-hidden /> {benefit}
+          <li key={benefit} className="border-rail-line flex items-start gap-3 border-b py-3 text-base">
+            <IconCheck size="1.15rem" className="text-brand-500 mt-0.5 shrink-0" aria-hidden /> {benefit}
           </li>
         ))}
       </ul>
@@ -292,11 +299,11 @@ function OfferCard({ onCheckoutOpened, awaiting }: { onCheckoutOpened: () => voi
         // Never locked: a checkout closed without paying must not keep the user from trying again.
         disabled={!selected}
         block
-        className="mt-8 bg-white text-[#9a470c] hover:bg-white/90"
+        className="mt-8"
       >
         {awaiting ? "Abrir o pagamento de novo" : "Assinar Premium"}
       </Button>
-      <p className="mt-4 text-center">
+      <p className="text-rail-muted mt-4 text-center text-sm leading-relaxed">
         Pagamento seguro pelo Pagar.me, no cartão de crédito. Cancele quando quiser: o Premium continua até o
         fim do período já pago.
       </p>
@@ -331,7 +338,7 @@ function PremiumCard({ subscription: s }: { subscription: CurrentSubscription })
   };
 
   return (
-    <Card className="p-8">
+    <Card className="p-7">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-muted">Seu plano atual</p>
@@ -339,7 +346,7 @@ function PremiumCard({ subscription: s }: { subscription: CurrentSubscription })
             <IconCrown size="1.8rem" className="text-brand-700" aria-hidden /> Premium
           </h2>
           {s.price > 0 && period && (
-            <p className="text-muted text-lg">
+            <p className="text-muted text-base">
               {formatMoney(s.price)}/{period}
             </p>
           )}
@@ -369,7 +376,7 @@ function PremiumCard({ subscription: s }: { subscription: CurrentSubscription })
           </Alert>
         )}
         {scheduled ? (
-          <p className="text-ink text-lg">
+          <p className="text-ink text-base">
             Você cancelou a renovação. O Premium continua até{" "}
             <strong>
               {formatApiDate(s.accessEndsAt ?? s.cancellationScheduledFor ?? s.nextBillingDate ?? "")}
@@ -378,7 +385,7 @@ function PremiumCard({ subscription: s }: { subscription: CurrentSubscription })
           </p>
         ) : (
           s.nextBillingDate && (
-            <p className="text-ink text-lg">
+            <p className="text-ink text-base">
               Próxima cobrança em <strong>{formatApiDate(s.nextBillingDate)}</strong>
               {s.price > 0 && <> no valor de {formatMoney(s.price)}</>}.
             </p>
@@ -441,12 +448,12 @@ function HistoryCard() {
   const items = [...(history.data ?? [])].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
-    <Card className="self-start p-8">
-      <h2 className="text-ink text-2xl font-bold">Histórico de assinaturas</h2>
+    <Card className="self-start p-7">
+      <h2 className="text-ink text-xl font-bold">Histórico de assinaturas</h2>
       {history.isPending ? (
         <Skeleton className="mt-4 h-20" />
       ) : items.length === 0 ? (
-        <p className="text-muted mt-3 text-lg">
+        <p className="text-muted mt-3 text-base">
           Você ainda não teve assinaturas. Os pagamentos são processados com segurança pelo Pagar.me.
         </p>
       ) : (
@@ -457,7 +464,7 @@ function HistoryCard() {
               className="border-line flex justify-between gap-4 border-b py-4 last:border-b-0"
             >
               <div>
-                <p className="text-ink text-lg font-semibold">{item.planName}</p>
+                <p className="text-ink text-base font-semibold">{item.planName}</p>
                 <p className="text-muted">
                   {item.startsAt
                     ? `Desde ${formatApiDate(item.startsAt)}`

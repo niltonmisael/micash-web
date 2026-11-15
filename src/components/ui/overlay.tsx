@@ -82,24 +82,24 @@ export function Dialog({ open, onClose, title, children, variant = "modal", size
 
   return createPortal(
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/55" onClick={onClose} aria-hidden />
+      <div className="absolute inset-0 bg-[#0c0b0a]/60 backdrop-blur-[2px]" onClick={onClose} aria-hidden />
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         className={clsx(
-          "bg-surface absolute overflow-y-auto shadow-2xl",
+          "bg-surface absolute overflow-y-auto shadow-[0_40px_80px_-20px_rgb(0_0_0/0.45)]",
           variant === "drawer"
-            ? "inset-y-0 right-0 w-full max-w-[37.5rem] px-6 py-10 sm:px-11"
+            ? "inset-y-0 right-0 w-full max-w-[34rem] px-6 py-8 sm:px-9"
             : clsx(
-                "inset-x-4 top-1/2 max-h-[92dvh] -translate-y-1/2 rounded-[1.75rem] px-6 py-10 sm:inset-x-auto sm:left-1/2 sm:w-full sm:-translate-x-1/2 sm:px-12",
-                size === "sm" ? "sm:max-w-lg" : "sm:max-w-[58rem]",
+                "inset-x-4 top-1/2 max-h-[92dvh] -translate-y-1/2 rounded-2xl px-6 py-8 sm:inset-x-auto sm:left-1/2 sm:w-full sm:-translate-x-1/2 sm:px-10",
+                size === "sm" ? "sm:max-w-lg" : "sm:max-w-[52rem]",
               ),
         )}
       >
         <div className="flex items-start justify-between gap-4">
-          <h2 id={titleId} className="text-ink text-[1.9rem] leading-tight font-bold tracking-tight">
+          <h2 id={titleId} className="text-ink text-[1.65rem] leading-tight font-bold">
             {title}
           </h2>
           <button
@@ -108,10 +108,10 @@ export function Dialog({ open, onClose, title, children, variant = "modal", size
             className="text-muted hover:bg-brand-50 hover:text-ink -mt-1 -mr-2 rounded-xl p-2"
             aria-label="Fechar"
           >
-            <IconX size="1.75rem" />
+            <IconX size="1.5rem" />
           </button>
         </div>
-        <div className="mt-8">{children}</div>
+        <div className="mt-7">{children}</div>
       </div>
     </div>,
     document.body,
@@ -139,7 +139,7 @@ export function ConfirmDialog({
 }) {
   return (
     <Dialog open={open} onClose={onClose} title={title} size="sm">
-      <div className="text-muted text-lg leading-relaxed">{message}</div>
+      <div className="text-muted text-base leading-relaxed">{message}</div>
       {error && (
         <p role="alert" className="text-expense mt-4">
           {error}
@@ -207,7 +207,7 @@ export function ActionMenu({
         <div
           id={menuId}
           role="menu"
-          className="border-line bg-surface absolute top-full right-0 z-20 mt-1 min-w-40 overflow-hidden rounded-2xl border py-2 shadow-xl"
+          className="border-line bg-surface absolute top-full right-0 z-20 mt-1 min-w-44 overflow-hidden rounded-xl border py-1.5 shadow-[0_16px_40px_-12px_rgb(0_0_0/0.25)]"
         >
           {items.map((item) => (
             <button
@@ -219,7 +219,7 @@ export function ActionMenu({
                 item.onSelect();
               }}
               className={clsx(
-                "hover:bg-brand-50 focus:bg-brand-50 block w-full px-5 py-2.5 text-left text-base outline-none",
+                "hover:bg-brand-50 focus:bg-brand-50 block w-full px-4 py-2.5 text-left text-[0.95rem] outline-none",
                 item.danger ? "text-expense" : "text-ink",
               )}
             >

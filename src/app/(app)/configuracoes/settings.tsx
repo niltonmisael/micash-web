@@ -51,9 +51,9 @@ export function Settings() {
   const tab: Tab = TABS.some((t) => t.value === param) ? (param as Tab) : "perfil";
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-7">
       <PageHeader title="Configurações" subtitle="Perfil, segurança, notificações e privacidade" />
-      <nav aria-label="Seções" className="border-line flex gap-8 overflow-x-auto border-b">
+      <nav aria-label="Seções" className="border-line flex min-w-0 gap-6 overflow-x-auto border-b">
         {TABS.map((t) => (
           <Link
             key={t.value}
@@ -61,7 +61,7 @@ export function Settings() {
             replace
             aria-current={tab === t.value ? "page" : undefined}
             className={clsx(
-              "-mb-px border-b-2 px-1 pb-4 text-xl whitespace-nowrap transition-colors",
+              "-mb-px border-b-2 px-1 pb-3.5 text-base whitespace-nowrap transition-colors",
               tab === t.value
                 ? "border-brand-600 text-brand-700 font-semibold"
                 : "text-muted hover:text-ink border-transparent",
@@ -124,9 +124,9 @@ function ProfileTab() {
   };
 
   return (
-    <div className="grid max-w-6xl items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
-      <Card className="p-8">
-        <h2 className="text-ink text-2xl font-bold">Dados pessoais</h2>
+    <div className="grid max-w-6xl grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+      <Card className="p-7">
+        <h2 className="text-ink text-xl font-bold">Dados pessoais</h2>
         <form onSubmit={save} noValidate className="mt-6 flex flex-col gap-6">
           {message && <Alert tone={message.tone}>{message.text}</Alert>}
           <Field
@@ -150,7 +150,7 @@ function ProfileTab() {
           <div className="flex flex-col gap-2">
             <span className="text-muted text-base font-medium">E-mail</span>
             <div className="border-line flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-5 py-4">
-              <span className="text-ink flex items-center gap-3 text-lg">
+              <span className="text-ink flex items-center gap-3 text-base">
                 <IconMail size="1.3rem" className="text-subtle" aria-hidden />
                 {profile.data.email}
               </span>
@@ -166,8 +166,8 @@ function ProfileTab() {
       </Card>
       <div className="flex flex-col gap-6">
         <PlanCard />
-        <Card className="p-8">
-          <h2 className="text-ink text-2xl font-bold">Aparência</h2>
+        <Card className="p-7">
+          <h2 className="text-ink text-xl font-bold">Aparência</h2>
           <p className="text-muted mt-2">Vale para este navegador. Sistema segue o tema do seu computador.</p>
           <div className="mt-5">
             <ThemeSwitcher />
@@ -233,7 +233,7 @@ function NotificationsTab() {
     <div className="flex max-w-3xl flex-col gap-6">
       {error && <Alert>{error}</Alert>}
       <Card className="px-8 py-2">
-        <h2 className="text-ink pt-6 text-2xl font-bold">Resumo mensal</h2>
+        <h2 className="text-ink pt-6 text-xl font-bold">Resumo mensal</h2>
         <ul>
           {PREFERENCE_ROWS.map((row) => (
             <PreferenceRow
@@ -247,7 +247,7 @@ function NotificationsTab() {
         </ul>
       </Card>
       <Card className="px-8 py-2">
-        <h2 className="text-ink pt-6 text-2xl font-bold">Comunicações</h2>
+        <h2 className="text-ink pt-6 text-xl font-bold">Comunicações</h2>
         <ul>
           <PreferenceRow
             title="Novidades e ofertas"
@@ -278,7 +278,7 @@ function PreferenceRow({
   return (
     <li className="border-line flex items-center gap-6 border-b py-5 last:border-b-0">
       <div className="min-w-0 flex-1">
-        <p className="text-ink text-xl font-semibold">{title}</p>
+        <p className="text-ink text-lg font-semibold">{title}</p>
         <p className="text-muted mt-1">{description}</p>
       </div>
       <Toggle label={title} hideLabel checked={checked} onChange={onChange} />
@@ -289,13 +289,13 @@ function PreferenceRow({
 function PlanCard() {
   const subscription = useSubscription();
   return (
-    <Card className="flex flex-wrap items-end justify-between gap-4 p-8">
+    <Card className="flex flex-wrap items-end justify-between gap-4 p-7">
       <div>
-        <h2 className="text-ink text-2xl font-bold">Seu plano</h2>
+        <h2 className="text-ink text-xl font-bold">Seu plano</h2>
         {subscription.isPending ? (
           <Skeleton className="mt-3 h-9 w-32" />
         ) : (
-          <p className="text-ink mt-2 text-3xl font-bold">
+          <p className="text-ink mt-2 text-2xl font-bold">
             {subscription.data?.isPremium ? "Premium" : "Gratuito"}
           </p>
         )}
@@ -388,7 +388,7 @@ function EmailChangeForm({ current, onClose }: { current: string; onClose: () =>
           requestCode();
         }}
       >
-        <p className="text-muted text-lg">
+        <p className="text-muted text-base">
           Enviaremos um código para o novo e-mail. Até você confirmar, sua conta continua com {current}.
         </p>
         {error && <Alert>{error}</Alert>}
@@ -418,7 +418,7 @@ function EmailChangeForm({ current, onClose }: { current: string; onClose: () =>
 
   return (
     <form onSubmit={confirm} noValidate className="flex flex-col gap-6">
-      <p className="text-muted text-lg">
+      <p className="text-muted text-base">
         Digite o código de 6 dígitos enviado para{" "}
         <strong className="text-ink">{maskEmail(newEmail.trim())}</strong>. Ele vale por 15 minutos.
       </p>
@@ -491,9 +491,9 @@ function SecurityTab() {
   };
 
   return (
-    <div className="grid max-w-5xl gap-6 lg:grid-cols-[1.4fr_1fr]">
-      <Card className="p-8">
-        <h2 className="text-ink text-2xl font-bold">Alterar senha</h2>
+    <div className="grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+      <Card className="p-7">
+        <h2 className="text-ink text-xl font-bold">Alterar senha</h2>
         <form onSubmit={submit} noValidate className="mt-6 flex flex-col gap-6">
           {message && <Alert tone={message.tone}>{message.text}</Alert>}
           <Field
@@ -526,9 +526,9 @@ function SecurityTab() {
           </Button>
         </form>
       </Card>
-      <Card className="self-start p-8">
-        <h2 className="text-ink text-2xl font-bold">Sessão</h2>
-        <p className="text-muted mt-2 text-lg">Sair encerra a sessão neste navegador.</p>
+      <Card className="self-start p-7">
+        <h2 className="text-ink text-xl font-bold">Sessão</h2>
+        <p className="text-muted mt-2 text-base">Sair encerra a sessão neste navegador.</p>
         <Button variant="outline" onClick={logout} className="mt-5">
           <IconLogout size="1.3rem" aria-hidden /> Sair da conta
         </Button>
@@ -542,7 +542,7 @@ function SecurityTab() {
 function PrivacyTab() {
   const [deleting, setDeleting] = useState(false);
   return (
-    <div className="grid max-w-6xl gap-6 lg:grid-cols-[1.4fr_1fr]">
+    <div className="grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
       <Card className="px-6 py-2 sm:px-8">
         <ul>
           <PrivacyRow
@@ -566,14 +566,14 @@ function PrivacyTab() {
           />
         </ul>
       </Card>
-      <Card className="self-start p-8">
-        <h2 className="text-ink text-xl font-bold">Ajuda e suporte</h2>
+      <Card className="self-start p-7">
+        <h2 className="text-ink text-lg font-bold">Ajuda e suporte</h2>
         <p className="text-muted mt-2">Dúvidas, problemas ou sugestões? Fale com a gente.</p>
         <ul className="mt-5 flex flex-col gap-3">
           <li>
             <a
               href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("Ajuda com o MiCash")}`}
-              className="text-ink hover:bg-brand-50 -mx-3 flex items-center gap-3 rounded-xl px-3 py-2 text-lg"
+              className="text-ink hover:bg-brand-50 -mx-3 flex items-center gap-3 rounded-xl px-3 py-2 text-base"
             >
               <IconHelpCircle size="1.4rem" className="text-brand-700" aria-hidden />
               Falar com o suporte
@@ -582,7 +582,7 @@ function PrivacyTab() {
           <li>
             <a
               href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("Problema no MiCash")}`}
-              className="text-ink hover:bg-brand-50 -mx-3 flex items-center gap-3 rounded-xl px-3 py-2 text-lg"
+              className="text-ink hover:bg-brand-50 -mx-3 flex items-center gap-3 rounded-xl px-3 py-2 text-base"
             >
               <IconMessageReport size="1.4rem" className="text-brand-700" aria-hidden />
               Relatar um problema
@@ -617,7 +617,7 @@ function PrivacyRow({
     <>
       <span
         className={clsx(
-          "grid size-14 shrink-0 place-items-center rounded-2xl",
+          "grid size-11 shrink-0 place-items-center rounded-2xl",
           danger ? "bg-expense-soft text-expense" : "bg-brand-100 text-brand-700",
         )}
         aria-hidden
@@ -625,7 +625,7 @@ function PrivacyRow({
         <RowIcon size="1.5rem" />
       </span>
       <span className="min-w-0 flex-1 text-left">
-        <span className={clsx("block text-xl font-semibold", danger ? "text-expense" : "text-ink")}>
+        <span className={clsx("block text-lg font-semibold", danger ? "text-expense" : "text-ink")}>
           {title}
         </span>
         <span className="text-muted block text-base">{description}</span>
@@ -692,7 +692,7 @@ function DeleteAccountDialog({ open, onClose }: { open: boolean; onClose: () => 
           noValidate
           className="flex flex-col gap-5"
         >
-          <p className="text-muted text-lg leading-relaxed">
+          <p className="text-muted text-base leading-relaxed">
             Sua conta e todos os seus dados (transações, categorias, metas e conversas com o Mi) serão
             apagados definitivamente. Essa ação não pode ser desfeita.
           </p>

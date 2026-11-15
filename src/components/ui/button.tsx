@@ -3,21 +3,24 @@ import clsx from "clsx";
 import { cn } from "@/lib/cn";
 import Link from "next/link";
 
-type Variant = "primary" | "outline" | "ghost" | "link";
+type Variant = "primary" | "ink" | "outline" | "ghost" | "link";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-brand-600 text-white hover:bg-brand-700 disabled:bg-brand-200",
-  outline: "border border-line bg-surface text-ink hover:bg-brand-50",
+  // Fixed hover shade: brand-700 turns light orange in dark mode, which would wash out the white label.
+  primary:
+    "bg-brand-600 text-white hover:bg-[#c75e16] disabled:bg-brand-200 shadow-[inset_0_-1px_0_rgb(0_0_0/0.12)]",
+  ink: "bg-ink text-cream hover:bg-ink/85 disabled:opacity-50",
+  outline: "border border-line bg-surface text-ink hover:border-subtle hover:bg-brand-50",
   ghost: "text-muted hover:bg-brand-50 hover:text-ink",
   link: "text-brand-700 hover:text-brand-800 font-semibold",
 };
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-colors disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-[background-color,border-color,color,transform] duration-150 active:translate-y-px disabled:cursor-not-allowed disabled:active:translate-y-0";
 
 function sizeClass(variant: Variant, block?: boolean) {
   if (variant === "link") return "";
-  return clsx("h-14 px-6 text-lg", block && "w-full");
+  return clsx("h-12 px-5 text-base", block && "w-full");
 }
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {

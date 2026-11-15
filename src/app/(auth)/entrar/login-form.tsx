@@ -44,7 +44,7 @@ export function LoginForm() {
   });
 
   return (
-    <form onSubmit={onSubmit} noValidate className="mt-12 flex flex-col gap-6">
+    <form onSubmit={onSubmit} noValidate className="mt-9 flex flex-col gap-5">
       {serverError && <Alert>{serverError}</Alert>}
       <Field
         label="E-mail"
@@ -66,11 +66,14 @@ export function LoginForm() {
           {...register("password")}
         />
         <div className="flex items-center justify-between gap-4">
-          <label className="text-ink flex cursor-pointer items-center gap-3 text-lg">
-            <input type="checkbox" className="accent-brand-500 size-5" {...register("remember")} />
+          <label className="text-ink flex cursor-pointer items-center gap-3 text-[0.95rem]">
+            <input type="checkbox" className="accent-brand-500 size-4.5" {...register("remember")} />
             Manter conectado
           </label>
-          <Link href="/recuperar-senha" className="text-brand-700 hover:text-brand-800 text-lg font-semibold">
+          <Link
+            href="/recuperar-senha"
+            className="text-brand-700 hover:text-brand-800 text-[0.95rem] font-semibold"
+          >
             Esqueci a senha
           </Link>
         </div>
@@ -78,7 +81,7 @@ export function LoginForm() {
       <Button type="submit" block loading={isSubmitting} className="mt-4">
         Entrar
       </Button>
-      <p className="text-muted mt-4 text-center text-xl">
+      <p className="text-muted mt-4 text-center text-base">
         Ainda não tem conta?{" "}
         <Link href="/cadastro" className="text-brand-700 hover:text-brand-800 font-semibold">
           Criar conta grátis

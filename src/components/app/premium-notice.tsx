@@ -8,9 +8,9 @@ import { ApiError } from "@/lib/api";
  */
 export function PlanUsageBanner({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-brand-100 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl px-6 py-4">
-      <IconInfoCircle size="1.4rem" className="text-brand-700 shrink-0" aria-hidden />
-      <p className="text-ink min-w-0 flex-1 text-lg">{children}</p>
+    <div className="border-brand-500 bg-surface shadow-card flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border-l-[3px] px-5 py-3.5">
+      <IconInfoCircle size="1.25rem" className="text-brand-700 shrink-0" aria-hidden />
+      <p className="text-ink min-w-0 flex-1 text-base">{children}</p>
       <PremiumLink />
     </div>
   );
@@ -20,9 +20,9 @@ export function PremiumLink({ label = "Conhecer Premium" }: { label?: string }) 
   return (
     <Link
       href="/assinatura"
-      className="text-brand-700 hover:text-brand-800 inline-flex items-center gap-1.5 text-lg font-semibold"
+      className="text-brand-700 hover:text-brand-800 inline-flex items-center gap-1.5 text-base font-semibold"
     >
-      <IconCrown size="1.2rem" aria-hidden /> {label}
+      <IconCrown size="1.1rem" aria-hidden /> {label}
     </Link>
   );
 }
@@ -36,7 +36,7 @@ export function ActionError({ error }: { error: unknown }) {
   return (
     <div
       role="alert"
-      className="bg-expense-soft text-expense flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl px-4 py-3"
+      className="bg-expense-soft text-expense flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl px-4 py-3 text-[0.95rem]"
     >
       <span className="flex-1">{message}</span>
       {planLimit && <PremiumLink />}

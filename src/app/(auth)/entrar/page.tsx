@@ -11,8 +11,8 @@ export default function LoginPage() {
       asideTitle="Tudo em um só lugar"
       asideText="Seu painel financeiro sincronizado com o app, onde você estiver."
     >
-      <h1 className="text-ink text-5xl font-bold tracking-tight">Bem-vindo de volta</h1>
-      <p className="text-muted mt-4 text-xl">Entre para acompanhar suas finanças.</p>
+      <h1 className="text-ink text-[2.4rem] leading-[1.05] font-bold sm:text-[2.9rem]">Bem-vindo de volta</h1>
+      <p className="text-muted mt-3 text-lg">Entre para acompanhar suas finanças.</p>
       <Suspense>
         <LoginForm />
       </Suspense>

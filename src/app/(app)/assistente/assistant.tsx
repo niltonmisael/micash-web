@@ -130,13 +130,13 @@ export function Assistant() {
   const outOfQuestions = chat !== undefined && chat.remaining <= 0;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-7">
       <PageHeader
         title="Mi Assistente"
         subtitle="Converse com suas finanças"
         actions={
           messages.length > 0 && (
-            <Button variant="outline" onClick={newConversation} disabled={sending} className="h-14">
+            <Button variant="outline" onClick={newConversation} disabled={sending} className="h-12">
               <IconMessagePlus size="1.3rem" aria-hidden /> Nova conversa
             </Button>
           )
@@ -144,7 +144,7 @@ export function Assistant() {
       />
 
       <div className="grid gap-6 xl:grid-cols-[1fr_24rem]">
-        <Card className="flex h-[calc(100dvh-14rem)] min-h-[32rem] flex-col">
+        <Card className="flex h-[calc(100dvh-12rem)] min-h-[32rem] flex-col">
           <div
             ref={listRef}
             className="flex-1 overflow-y-auto px-5 py-6 sm:px-10"
@@ -155,21 +155,21 @@ export function Assistant() {
           >
             {history.isPending ? (
               <div className="flex flex-col gap-4">
-                <Skeleton className="ml-auto h-14 w-2/3" />
+                <Skeleton className="ml-auto h-12 w-2/3" />
                 <Skeleton className="h-24 w-3/4" />
               </div>
             ) : history.isError ? (
               <Alert>{errorMessage(history.error)}</Alert>
             ) : messages.length === 0 && !sending ? (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
-                <span className="bg-brand-100 text-brand-700 grid size-16 place-items-center rounded-2xl">
+                <span className="bg-brand-100 text-brand-700 grid size-12 place-items-center rounded-2xl">
                   <IconSparkles size="2rem" aria-hidden />
                 </span>
-                <p className="text-ink text-2xl font-bold">
+                <p className="text-ink text-xl font-bold">
                   Oi{firstName(profile.data?.name) ? `, ${firstName(profile.data?.name)}` : ""}! Como posso
                   ajudar?
                 </p>
-                <p className="text-muted max-w-md text-lg">
+                <p className="text-muted max-w-md text-base">
                   Pergunte sobre seus gastos, receitas e metas. O Mi analisa seus lançamentos e responde sem
                   jargão.
                 </p>
@@ -238,7 +238,7 @@ export function Assistant() {
                       : "Pergunte sobre suas finanças..."
                   }
                   disabled={sending}
-                  className="text-ink placeholder:text-subtle max-h-40 min-h-8 w-full resize-none bg-transparent text-lg leading-8 outline-none focus-visible:outline-none"
+                  className="text-ink placeholder:text-subtle max-h-40 min-h-8 w-full resize-none bg-transparent text-base leading-8 outline-none focus-visible:outline-none"
                 />
               </label>
               <Button
@@ -262,11 +262,11 @@ export function Assistant() {
         <aside className="flex flex-col gap-6">
           {chat && (
             <Card className="p-7">
-              <p className="text-muted text-lg">
+              <p className="text-muted text-base">
                 {chat.period === "day" ? "Perguntas hoje" : "Perguntas este mês"}
               </p>
-              <p className="text-ink mt-1 text-lg">
-                <span className="text-3xl font-bold">{chat.used}</span> de {chat.limit}
+              <p className="text-ink mt-1 text-base">
+                <span className="text-2xl font-bold">{chat.used}</span> de {chat.limit}
               </p>
               <ProgressBar
                 value={chat.limit ? (chat.used / chat.limit) * 100 : 0}
@@ -285,7 +285,7 @@ export function Assistant() {
           )}
 
           <Card className="p-7">
-            <h2 className="text-ink text-xl font-bold">Sugestões</h2>
+            <h2 className="text-ink text-lg font-bold">Sugestões</h2>
             <div className="mt-4 flex flex-col gap-3">
               {suggestions.map((s) => (
                 <button
@@ -293,7 +293,7 @@ export function Assistant() {
                   type="button"
                   onClick={() => send(s)}
                   disabled={sending || outOfQuestions}
-                  className="bg-brand-50 text-ink hover:bg-brand-100 rounded-2xl px-5 py-3.5 text-left text-lg disabled:opacity-50"
+                  className="border-line text-ink hover:border-brand-500 hover:bg-brand-50 rounded-xl border px-4 py-3 text-left text-[0.95rem] transition-colors disabled:opacity-50"
                 >
                   {s}
                 </button>
@@ -325,7 +325,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   if (message.role === "user") {
     return (
       <li className="flex justify-end">
-        <p className="bg-brand-600 max-w-[80%] rounded-2xl rounded-br-md px-5 py-3.5 text-lg whitespace-pre-wrap text-white">
+        <p className="bg-brand-600 max-w-[80%] rounded-2xl rounded-br-md px-5 py-3.5 text-base whitespace-pre-wrap text-white">
           <span className="sr-only">Você: </span>
           {message.content}
         </p>
@@ -335,7 +335,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   return (
     <li className="flex items-start gap-3">
       <MiAvatar />
-      <div className="bg-brand-50 text-ink max-w-[85%] rounded-2xl rounded-tl-md px-5 py-4 text-lg leading-relaxed">
+      <div className="bg-brand-50 text-ink max-w-[85%] rounded-2xl rounded-tl-md px-5 py-4 text-base leading-relaxed">
         <span className="sr-only">Mi: </span>
         <RichText text={message.content} />
       </div>
@@ -357,7 +357,7 @@ function SuggestionChip({
       type="button"
       onClick={() => onPick(text)}
       disabled={disabled}
-      className="bg-brand-100 text-brand-800 hover:bg-brand-200 rounded-full px-5 py-2.5 font-semibold disabled:opacity-50"
+      className="border-line bg-surface text-ink hover:border-brand-500 hover:text-brand-700 rounded-full border px-4 py-2 text-[0.95rem] font-medium transition-colors disabled:opacity-50"
     >
       {text}
     </button>
@@ -375,7 +375,7 @@ function TipsCard() {
 
   return (
     <Card className="p-7">
-      <h2 className="text-ink text-xl font-bold">Dicas do mês</h2>
+      <h2 className="text-ink text-lg font-bold">Dicas do mês</h2>
       {data?.artificialInsight && (
         <div className="bg-brand-50 mt-4 rounded-2xl p-4">
           <p className="text-ink font-semibold">{data.artificialInsight.title}</p>

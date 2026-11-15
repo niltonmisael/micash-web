@@ -90,7 +90,7 @@ function CategoryForm({
   };
 
   return (
-    <form onSubmit={submit} noValidate className="flex flex-col gap-8">
+    <form onSubmit={submit} noValidate className="flex flex-col gap-7">
       {error && <Alert>{error}</Alert>}
       <Field
         label="Nome"
@@ -112,7 +112,7 @@ function CategoryForm({
                 key={key}
                 title={CATEGORY_ICON_LABELS[key]}
                 className={clsx(
-                  "has-[:focus-visible]:ring-brand-500 grid size-16 cursor-pointer place-items-center rounded-2xl border transition-colors has-[:focus-visible]:ring-2",
+                  "has-[:focus-visible]:ring-brand-500 grid size-12 cursor-pointer place-items-center rounded-2xl border transition-colors has-[:focus-visible]:ring-2",
                   selected
                     ? "border-brand-500 bg-brand-100 text-brand-700"
                     : "border-line text-muted hover:bg-brand-50",
@@ -144,7 +144,7 @@ function CategoryForm({
                 key={hex}
                 title={CATEGORY_COLOR_LABELS[hex]}
                 className={clsx(
-                  "has-[:focus-visible]:ring-brand-500 ring-offset-surface grid size-14 cursor-pointer place-items-center rounded-full ring-offset-2 has-[:focus-visible]:ring-2",
+                  "has-[:focus-visible]:ring-brand-500 ring-offset-surface grid size-11 cursor-pointer place-items-center rounded-full ring-offset-2 has-[:focus-visible]:ring-2",
                   selected && "ring-ink ring-2",
                 )}
                 style={{ background: hex }}

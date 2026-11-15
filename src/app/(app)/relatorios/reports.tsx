@@ -50,13 +50,13 @@ export function Reports() {
   const locked = !allowed(period);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-7">
       <PageHeader title="Relatórios" subtitle="Entenda para onde seu dinheiro vai" />
 
       <div
         role="radiogroup"
         aria-label="Período"
-        className="border-line bg-surface flex flex-wrap gap-1 self-start rounded-2xl border p-1.5"
+        className="bg-brand-50 flex flex-wrap gap-1 self-start rounded-xl p-1"
       >
         {PERIODS.map((p) => {
           const active = p.key === periodKey;
@@ -69,12 +69,14 @@ export function Reports() {
               aria-checked={active}
               onClick={() => setPeriodKey(p.key)}
               className={clsx(
-                "flex items-center gap-2 rounded-xl px-5 py-2.5 text-lg font-semibold transition-colors",
-                active ? "bg-brand-600 text-white" : "text-muted hover:text-ink",
+                "flex items-center gap-2 rounded-lg px-4 py-2 text-[0.95rem] font-semibold transition-colors",
+                active
+                  ? "bg-surface text-ink shadow-[0_1px_2px_rgb(0_0_0/0.08),0_0_0_1px_rgb(0_0_0/0.04)]"
+                  : "text-muted hover:text-ink",
               )}
             >
               {p.label}
-              {pLocked && <IconLock size="1.1rem" aria-label="(Premium)" />}
+              {pLocked && <IconLock size="1rem" aria-label="(Premium)" />}
             </button>
           );
         })}
@@ -83,8 +85,8 @@ export function Reports() {
       {locked ? (
         <Card className="flex flex-col items-center gap-3 px-6 py-16 text-center">
           <IconLock size="2rem" className="text-brand-700" aria-hidden />
-          <p className="text-ink text-xl font-semibold">Histórico completo no Premium</p>
-          <p className="text-muted max-w-lg text-lg">
+          <p className="text-ink text-lg font-semibold">Histórico completo no Premium</p>
+          <p className="text-muted max-w-lg text-base">
             No plano Gratuito, os relatórios mostram o mês atual e os {plan.data?.historyMonths ?? 3} meses
             anteriores.
           </p>
@@ -128,9 +130,9 @@ function ReportBody({ months, single }: { months: YearMonth[]; single?: YearMont
       </Card>
 
       <section className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
-        <Card className="p-8">
+        <Card className="p-7">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 className="text-ink text-2xl font-bold">{single ? "Evolução no mês" : "Evolução mensal"}</h2>
+            <h2 className="text-ink text-xl font-bold">{single ? "Evolução no mês" : "Evolução mensal"}</h2>
             <span className="text-muted">{title}</span>
           </div>
           <div className="mt-6">
@@ -150,20 +152,20 @@ function ReportBody({ months, single }: { months: YearMonth[]; single?: YearMont
           </div>
         </Card>
 
-        <Card className="p-8">
-          <h2 className="text-ink text-2xl font-bold">Maiores categorias</h2>
+        <Card className="p-7">
+          <h2 className="text-ink text-xl font-bold">Maiores categorias</h2>
           <div className="mt-6">
             {categories.loading ? (
               <Skeleton className="h-72" />
             ) : categories.error ? (
               <Alert>{errorMessage(categories.error)}</Alert>
             ) : top.length === 0 ? (
-              <p className="text-muted py-10 text-center text-lg">Nenhuma despesa no período.</p>
+              <p className="text-muted py-10 text-center text-base">Nenhuma despesa no período.</p>
             ) : (
               <ul className="flex flex-col gap-6">
                 {top.map((c) => (
                   <li key={c.categoryId}>
-                    <div className="flex items-baseline justify-between gap-4 text-lg">
+                    <div className="flex items-baseline justify-between gap-4 text-base">
                       <span className="text-ink truncate">{c.categoryName}</span>
                       <span className="text-ink font-semibold whitespace-nowrap tabular-nums">
                         {formatMoney(c.amount)}
@@ -207,13 +209,13 @@ function Kpi({
 }) {
   return (
     <div>
-      <p className="text-muted text-lg" title={hint}>
+      <p className="text-muted text-base" title={hint}>
         {label}
       </p>
       {loading ? (
         <Skeleton className="mt-2 h-10 w-40" />
       ) : (
-        <p className={clsx("mt-1 text-[2rem] font-bold tracking-tight tabular-nums", className)}>{value}</p>
+        <p className={clsx("figure mt-1 text-[2rem] font-bold", className)}>{value}</p>
       )}
     </div>
   );

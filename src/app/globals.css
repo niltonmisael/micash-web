@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
 /*
- * MiCash design tokens. Light values come from Docs/MiCash-Web-Telas; dark values are their counterparts.
- * Tailwind classes (bg-surface, text-ink...) read the --mc-* variables below, so the theme is switched by
- * changing variables only:
- *   - no data-theme (or "system"): follows the operating system;
- *   - data-theme="light" / "dark": the user's choice (see src/lib/theme.ts).
- * Contrast: text tokens are AA (4.5:1) on surface in both themes; chart bar pairs were validated for CVD
- * with the dataviz validator (light: #2f7d50/#e8957f, dark: #4aab76/#b9553f).
+ * MiCash design tokens: "graphite and ember".
+ * - Paper (cream) and surface are neutral warm greys, so the brand orange only appears where it means
+ *   something: actions, the active place, a highlight. Graphite (--mc-rail) is the second brand color:
+ *   sidebar, hero, dark bands.
+ * - Tailwind classes (bg-surface, text-ink...) read the --mc-* variables below, so the theme is switched by
+ *   changing variables only:
+ *     - no data-theme (or "system"): follows the operating system;
+ *     - data-theme="light" / "dark": the user's choice (see src/lib/theme.ts).
+ * Contrast: text tokens are AA (4.5:1) on surface and on paper in both themes; rail tokens are AA on the
+ * rail. Chart bar pairs were validated for CVD (light: #2f7d50/#e8957f, dark: #4aab76/#b9553f).
  */
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --color-surface: var(--mc-surface);
   --color-cream: var(--mc-cream);
@@ -39,7 +43,20 @@
   --color-warning-soft: var(--mc-warning-soft);
   --color-warning-ink: var(--mc-warning-ink);
 
-  --radius-card: 1.25rem;
+  /* Graphite: always dark, in both themes (sidebar, hero, dark bands, footer). */
+  --color-rail: var(--mc-rail);
+  --color-rail-raised: var(--mc-rail-raised);
+  --color-rail-line: var(--mc-rail-line);
+  --color-rail-ink: #f5f2ee;
+  --color-rail-muted: #b0a9a1;
+
+  /* Radius scale: tighter than the SaaS default, with hierarchy (controls < panels). */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1rem;
+  --radius-card: 0.875rem;
+
   --shadow-card: var(--mc-shadow-card);
   --shadow-float: var(--mc-shadow-float);
 }
@@ -47,15 +64,16 @@
 :root {
   color-scheme: light;
   --mc-surface: #ffffff;
-  --mc-cream: #fdf6f0;
-  --mc-line: #f1e6dc;
-  --mc-ink: #2d2a26;
-  --mc-muted: #7a716a;
-  --mc-subtle: #a59c94;
+  --mc-cream: #f6f5f3;
+  --mc-line: #e9e6e2;
+  --mc-ink: #1b1916;
+  --mc-muted: #69635d;
+  --mc-subtle: #9a948d;
 
-  --mc-brand-50: #fef6ef;
-  --mc-brand-100: #fde8d7;
-  --mc-brand-200: #f9d3b4;
+  /* 50: neutral hover/fill tint; 100/200: the soft ember used sparingly (active chips, highlights). */
+  --mc-brand-50: #f3f1ee;
+  --mc-brand-100: #fdeadb;
+  --mc-brand-200: #f8cfae;
   --mc-brand-500: #f58a3c;
   --mc-brand-600: #df6d1f; /* button fill: white text 3.3:1 (large bold) */
   --mc-brand-700: #b8560f; /* orange text: 4.8:1 on white */
@@ -63,34 +81,38 @@
 
   --mc-income: #2f7d50;
   --mc-income-bar: #2f7d50;
-  --mc-income-soft: #e3f2e8;
+  --mc-income-soft: #e4f1e8;
   --mc-expense: #b4513a;
   --mc-expense-bar: #e8957f;
-  --mc-expense-soft: #f9e3dd;
+  --mc-expense-soft: #f8e5df;
   --mc-warning: #e8a23c;
   --mc-warning-soft: #fcefd9;
   --mc-warning-ink: #8a5a00;
 
-  --mc-auth-aside: #fbe9da;
-  --mc-chart-cursor: #fef6ef;
-  --mc-chart-others: #cfc6bd;
+  --mc-rail: #1b1916;
+  --mc-rail-raised: #282521;
+  --mc-rail-line: #35312c;
 
-  --mc-shadow-card: 0 1px 2px rgb(45 42 38 / 0.04);
-  --mc-shadow-float: 0 24px 60px -20px rgb(196 98 28 / 0.25);
+  --mc-auth-aside: #1b1916;
+  --mc-chart-cursor: #f3f1ee;
+  --mc-chart-others: #cfc9c2;
+
+  --mc-shadow-card: 0 0 0 1px rgb(27 25 22 / 0.05), 0 1px 3px rgb(27 25 22 / 0.05);
+  --mc-shadow-float: 0 0 0 1px rgb(27 25 22 / 0.06), 0 30px 60px -24px rgb(27 25 22 / 0.28);
 }
 
 /* Dark: explicit choice here; OS preference in the media query below (unless the user chose light). */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --mc-surface: #211b17;
-  --mc-cream: #15110e;
-  --mc-line: #3a312a;
-  --mc-ink: #f2ebe4;
-  --mc-muted: #b3a89e;
-  --mc-subtle: #8c8178;
+  --mc-surface: #1c1a18;
+  --mc-cream: #121110;
+  --mc-line: #2f2c29;
+  --mc-ink: #f3f0ec;
+  --mc-muted: #ada69e;
+  --mc-subtle: #857e77;
 
-  --mc-brand-50: #2a1f17;
-  --mc-brand-100: #3b2919;
+  --mc-brand-50: #252220;
+  --mc-brand-100: #3a2819;
   --mc-brand-200: #5c3a1f;
   --mc-brand-500: #f58a3c;
   --mc-brand-600: #df6d1f;
@@ -99,34 +121,38 @@
 
   --mc-income: #5fbf86;
   --mc-income-bar: #4aab76;
-  --mc-income-soft: #183326;
+  --mc-income-soft: #17301f;
   --mc-expense: #f08a70;
   --mc-expense-bar: #b9553f;
-  --mc-expense-soft: #3b211b;
+  --mc-expense-soft: #3a211b;
   --mc-warning: #e8a23c;
   --mc-warning-soft: #3a2c14;
   --mc-warning-ink: #f2c26b;
 
-  --mc-auth-aside: #2a1f17;
-  --mc-chart-cursor: #2a1f17;
-  --mc-chart-others: #6b6058;
+  --mc-rail: #0c0b0a;
+  --mc-rail-raised: #1d1b19;
+  --mc-rail-line: #2a2724;
 
-  --mc-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
-  --mc-shadow-float: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+  --mc-auth-aside: #0c0b0a;
+  --mc-chart-cursor: #252220;
+  --mc-chart-others: #5f5953;
+
+  --mc-shadow-card: 0 0 0 1px rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.3);
+  --mc-shadow-float: 0 0 0 1px rgb(255 255 255 / 0.06), 0 30px 60px -24px rgb(0 0 0 / 0.7);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --mc-surface: #211b17;
-    --mc-cream: #15110e;
-    --mc-line: #3a312a;
-    --mc-ink: #f2ebe4;
-    --mc-muted: #b3a89e;
-    --mc-subtle: #8c8178;
+    --mc-surface: #1c1a18;
+    --mc-cream: #121110;
+    --mc-line: #2f2c29;
+    --mc-ink: #f3f0ec;
+    --mc-muted: #ada69e;
+    --mc-subtle: #857e77;
 
-    --mc-brand-50: #2a1f17;
-    --mc-brand-100: #3b2919;
+    --mc-brand-50: #252220;
+    --mc-brand-100: #3a2819;
     --mc-brand-200: #5c3a1f;
     --mc-brand-500: #f58a3c;
     --mc-brand-600: #df6d1f;
@@ -135,42 +161,55 @@
 
     --mc-income: #5fbf86;
     --mc-income-bar: #4aab76;
-    --mc-income-soft: #183326;
+    --mc-income-soft: #17301f;
     --mc-expense: #f08a70;
     --mc-expense-bar: #b9553f;
-    --mc-expense-soft: #3b211b;
+    --mc-expense-soft: #3a211b;
     --mc-warning: #e8a23c;
     --mc-warning-soft: #3a2c14;
     --mc-warning-ink: #f2c26b;
 
-    --mc-auth-aside: #2a1f17;
-    --mc-chart-cursor: #2a1f17;
-    --mc-chart-others: #6b6058;
+    --mc-rail: #0c0b0a;
+    --mc-rail-raised: #1d1b19;
+    --mc-rail-line: #2a2724;
 
-    --mc-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
-    --mc-shadow-float: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+    --mc-auth-aside: #0c0b0a;
+    --mc-chart-cursor: #252220;
+    --mc-chart-others: #5f5953;
+
+    --mc-shadow-card: 0 0 0 1px rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.3);
+    --mc-shadow-float: 0 0 0 1px rgb(255 255 255 / 0.06), 0 30px 60px -24px rgb(0 0 0 / 0.7);
   }
 }
 
 @layer base {
   /*
-   * Fluid scale: the prototypes were drawn on a 1920px screen. Everything is in rem, so the root
-   * size scales the whole layout: 100% at 1920px+, 80% (floor) at 1536px and below.
-   * Percentages keep the user's browser font-size preference.
+   * Root size: 15px up to large desktops, 16px on wide screens (1680px+). Everything is in rem, so this
+   * sets the whole layout. Percentages keep the user's browser font-size preference.
    */
   html {
-    font-size: 87.5%;
+    font-size: 93.75%;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1680px) {
     html {
-      font-size: clamp(80%, 0.834vw, 100%);
+      font-size: 100%;
     }
   }
 
   body {
     background: var(--color-cream);
     color: var(--color-ink);
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Headings speak in the display face; UI text stays in Inter. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
   :focus-visible {
@@ -182,5 +221,47 @@
   input[type="date"],
   input[type="month"] {
     color-scheme: inherit;
+  }
+}
+
+@layer utilities {
+  /* Money and other figures set large: display face, lining tabular figures, tight tracking. */
+  .figure {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.03em;
+  }
+}
+
+/* The one orchestrated moment on public pages: the hero enters once on load. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-enter] > * {
+    animation: mc-enter 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  [data-enter] > *:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  [data-enter] > *:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+  [data-enter] > *:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+  [data-enter-late] {
+    animation: mc-rise 0.9s 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+
+@keyframes mc-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes mc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
   }
 }
