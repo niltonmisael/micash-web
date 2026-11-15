@@ -55,7 +55,7 @@ export function RegisterForm() {
   });
 
   return (
-    <form onSubmit={onSubmit} noValidate className="mt-12 flex flex-col gap-6">
+    <form onSubmit={onSubmit} noValidate className="mt-9 flex flex-col gap-5">
       {serverError && <Alert>{serverError}</Alert>}
       <Field
         label="Nome completo"
@@ -103,8 +103,8 @@ export function RegisterForm() {
         {...register("password")}
       />
       <div>
-        <label className="text-muted flex cursor-pointer items-start gap-3 text-lg leading-relaxed">
-          <input type="checkbox" className="accent-brand-500 mt-1.5 size-5 shrink-0" {...register("terms")} />
+        <label className="text-muted flex cursor-pointer items-start gap-3 text-[0.95rem] leading-relaxed">
+          <input type="checkbox" className="accent-brand-500 mt-1 size-4.5 shrink-0" {...register("terms")} />
           <span>
             Li e concordo com os{" "}
             <Link href="/termos" target="_blank" className="text-brand-700 font-semibold">
@@ -122,7 +122,7 @@ export function RegisterForm() {
       <Button type="submit" block loading={isSubmitting} className="mt-2">
         Criar conta
       </Button>
-      <p className="text-muted mt-4 text-center text-xl">
+      <p className="text-muted mt-4 text-center text-base">
         Já tem conta?{" "}
         <Link href="/entrar" className="text-brand-700 hover:text-brand-800 font-semibold">
           Entrar

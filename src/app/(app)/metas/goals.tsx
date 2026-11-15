@@ -52,7 +52,7 @@ export function Goals() {
   const tab: Tab = useSearchParams().get("tab") === "limites" ? "limites" : "economia";
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-7">
       <PageHeader title="Metas financeiras" subtitle="Acompanhe seus objetivos" />
       <Segmented<Tab>
         label="Tipo de meta"
@@ -105,8 +105,8 @@ function SavingsSection() {
   return (
     <section aria-label="Metas de economia" className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <p className="text-muted text-lg">Guarde dinheiro para seus objetivos e acompanhe quanto falta.</p>
-        <Button onClick={() => setCreating(true)} disabled={atLimit} className="h-16 px-8">
+        <p className="text-muted text-base">Guarde dinheiro para seus objetivos e acompanhe quanto falta.</p>
+        <Button onClick={() => setCreating(true)} disabled={atLimit} className="h-12 px-8">
           <IconPlus size="1.4rem" aria-hidden /> Nova meta
         </Button>
       </div>
@@ -124,12 +124,12 @@ function SavingsSection() {
       {goals.isError ? (
         <Alert>{errorMessage(goals.error)}</Alert>
       ) : goals.isPending ? (
-        <div className="grid gap-6 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
           <Skeleton className="h-60" />
           <Skeleton className="h-60" />
         </div>
       ) : (
-        <ul className="grid gap-6 xl:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-6 xl:grid-cols-2">
           {list.map((goal) => (
             <li key={goal.id}>
               <SavingsGoalCard
@@ -149,7 +149,7 @@ function SavingsSection() {
             {atLimit ? (
               <div className="border-brand-200 flex h-full min-h-56 flex-col items-center justify-center gap-2 rounded-[var(--radius-card)] border-2 border-dashed px-6 py-10 text-center">
                 <IconLock size="1.8rem" className="text-brand-700" aria-hidden />
-                <p className="text-brand-700 text-xl font-semibold">Nova meta</p>
+                <p className="text-brand-700 text-lg font-semibold">Nova meta</p>
                 <p className="text-muted">Disponível no Premium</p>
                 <Link href="/assinatura" className="text-brand-700 hover:text-brand-800 mt-2 font-semibold">
                   Conhecer Premium
@@ -162,7 +162,7 @@ function SavingsSection() {
                 className="border-brand-200 hover:bg-brand-50 flex h-full min-h-56 w-full flex-col items-center justify-center gap-2 rounded-[var(--radius-card)] border-2 border-dashed px-6 py-10"
               >
                 <IconPlus size="1.8rem" className="text-brand-700" aria-hidden />
-                <span className="text-brand-700 text-xl font-semibold">Nova meta</span>
+                <span className="text-brand-700 text-lg font-semibold">Nova meta</span>
                 <span className="text-muted">Viagem, reserva de emergência, um carro...</span>
               </button>
             )}
@@ -223,11 +223,11 @@ function SavingsGoalCard({
   const overdue = !goal.isCompleted && goal.deadline !== null && goal.deadline < todayKey();
 
   return (
-    <Card className="flex h-full flex-col p-8">
+    <Card className="flex h-full flex-col p-7">
       <div className="flex items-start gap-4">
         <CategoryIcon icon={goal.icon} color={goal.color} />
         <div className="min-w-0 flex-1">
-          <h3 className="text-ink truncate text-2xl font-bold">{goal.name}</h3>
+          <h3 className="text-ink truncate text-xl font-bold">{goal.name}</h3>
           <p className="text-muted">{goal.deadline ? `Até ${deadlineLabel(goal.deadline)}` : "Sem prazo"}</p>
         </div>
         {goal.isCompleted ? (
@@ -251,7 +251,7 @@ function SavingsGoalCard({
         <p className="text-ink text-[2.4rem] font-bold tracking-tight tabular-nums">
           {formatMoney(goal.savedAmount, { cents: false })}
         </p>
-        <p className="text-muted text-lg">de {formatMoney(goal.targetAmount, { cents: false })}</p>
+        <p className="text-muted text-base">de {formatMoney(goal.targetAmount, { cents: false })}</p>
       </div>
       <ProgressBar
         value={goal.percentage}
@@ -259,7 +259,7 @@ function SavingsGoalCard({
         barClassName={goal.isCompleted ? "bg-income" : overdue ? "bg-warning" : "bg-brand-500"}
         label={`Progresso da meta ${goal.name}`}
       />
-      <div className="text-muted mt-3 flex flex-wrap justify-between gap-2 text-lg">
+      <div className="text-muted mt-3 flex flex-wrap justify-between gap-2 text-base">
         <span>{formatPercent(Math.round(goal.percentage))} concluída</span>
         {detail.data?.monthlyAmountNeeded ? (
           <span>Guardar {formatMoney(detail.data.monthlyAmountNeeded)}/mês</span>
@@ -296,7 +296,7 @@ function HistoryDialog({ goal, onClose }: { goal?: SavingsGoal; onClose: () => v
       ) : detail.isError ? (
         <Alert>{errorMessage(detail.error)}</Alert>
       ) : movements.length === 0 ? (
-        <p className="text-muted text-lg">Nenhum valor guardado ainda.</p>
+        <p className="text-muted text-base">Nenhum valor guardado ainda.</p>
       ) : (
         <ul>
           {movements.map((m) => {
@@ -307,12 +307,12 @@ function HistoryDialog({ goal, onClose }: { goal?: SavingsGoal; onClose: () => v
                 className="border-line flex items-center justify-between border-b py-4 last:border-b-0"
               >
                 <div>
-                  <p className="text-ink text-lg font-semibold">{deposit ? "Guardado" : "Retirada"}</p>
+                  <p className="text-ink text-base font-semibold">{deposit ? "Guardado" : "Retirada"}</p>
                   <p className="text-muted">{formatDayKey(m.date)}</p>
                 </div>
                 <p
                   className={clsx(
-                    "text-lg font-semibold tabular-nums",
+                    "text-base font-semibold tabular-nums",
                     deposit ? "text-income" : "text-expense",
                   )}
                 >
@@ -393,14 +393,14 @@ function LimitsSection() {
         <MonthPicker value={month} onChange={setMonth} canGoBack={isMonthAllowed(previous, plan.data)} />
         <div className="flex flex-wrap gap-3">
           {isCurrentOrFuture && list.length === 0 && !limits.isPending && (
-            <Button variant="outline" onClick={copyFromPrevious} loading={copying} className="h-16">
+            <Button variant="outline" onClick={copyFromPrevious} loading={copying} className="h-12">
               <IconCopy size="1.3rem" aria-hidden /> Copiar do mês anterior
             </Button>
           )}
           <Button
             onClick={() => setCreating(true)}
             disabled={atLimit || !canCreateHere}
-            className="h-16 px-8"
+            className="h-12 px-8"
             title={!canCreateHere ? "Limites só podem ser criados a partir do ano atual" : undefined}
           >
             <IconPlus size="1.4rem" aria-hidden /> Novo limite
@@ -426,8 +426,8 @@ function LimitsSection() {
         <Skeleton className="h-60" />
       ) : list.length === 0 ? (
         <Card className="flex flex-col items-center gap-3 px-6 py-14 text-center">
-          <p className="text-ink text-xl font-semibold">Nenhum limite neste mês</p>
-          <p className="text-muted max-w-lg text-lg">
+          <p className="text-ink text-lg font-semibold">Nenhum limite neste mês</p>
+          <p className="text-muted max-w-lg text-base">
             Defina quanto quer gastar por categoria (ex.: Mercado até R$ 800) e acompanhe o quanto já usou.
           </p>
         </Card>
@@ -444,8 +444,8 @@ function LimitsSection() {
                   <CategoryIcon icon={limit.icon} color={limit.color} />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-                      <p className="text-ink truncate text-xl font-semibold">{limit.categoryName}</p>
-                      <p className="text-muted text-lg tabular-nums">
+                      <p className="text-ink truncate text-lg font-semibold">{limit.categoryName}</p>
+                      <p className="text-muted text-base tabular-nums">
                         <span className="text-ink font-semibold">{formatMoney(limit.currentAmount)}</span> de{" "}
                         {formatMoney(limit.targetAmount)}
                       </p>

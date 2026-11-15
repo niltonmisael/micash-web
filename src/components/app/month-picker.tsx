@@ -15,24 +15,24 @@ export function MonthPicker({
 }) {
   const isCurrent = monthIndex(value) === monthIndex(currentYearMonth());
   return (
-    <div className="border-line bg-surface flex h-16 items-center gap-2 rounded-2xl border px-3">
+    <div className="border-line bg-surface flex h-12 items-center gap-1 rounded-xl border px-1.5">
       <button
         type="button"
         onClick={() => onChange(addMonths(value, -1))}
         disabled={!canGoBack}
-        className="text-muted hover:bg-brand-50 disabled:text-subtle rounded-xl p-2 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+        className="text-muted hover:bg-brand-50 hover:text-ink disabled:text-subtle rounded-lg p-1.5 disabled:cursor-not-allowed disabled:hover:bg-transparent"
         aria-label="Mês anterior"
         title={canGoBack ? "Mês anterior" : "Histórico mais antigo disponível no Premium"}
       >
         {canGoBack ? <IconChevronLeft size="1.375rem" /> : <IconLock size="1.25rem" />}
       </button>
-      <span className="text-ink min-w-40 text-center text-xl font-semibold" aria-live="polite">
+      <span className="text-ink min-w-36 text-center text-base font-semibold" aria-live="polite">
         {monthLabel(value)}
       </span>
       <button
         type="button"
         onClick={() => onChange(addMonths(value, 1))}
-        className="text-muted hover:bg-brand-50 rounded-xl p-2"
+        className="text-muted hover:bg-brand-50 hover:text-ink rounded-lg p-1.5"
         aria-label="Próximo mês"
       >
         <IconChevronRight size="1.375rem" />

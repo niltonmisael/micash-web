@@ -78,7 +78,7 @@ function MovementForm({
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-6">
-      <p className="text-muted text-lg">
+      <p className="text-muted text-base">
         Meta <strong className="text-ink">{goal.name}</strong> · guardado {formatMoney(goal.savedAmount)}
       </p>
       {formError && (

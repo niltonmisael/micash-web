@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV !== "production";
 
 /**
  * Content Security Policy. The browser only talks to this site (the BFF calls the API from the
- * server) and next/font serves Inter from here, so everything is 'self'.
+ * server) and next/font serves Inter and Schibsted Grotesk from here, so everything is 'self'.
  * - 'unsafe-inline' scripts: Next's inline bootstrap and the theme script (no nonces here).
  * - Dev only: 'unsafe-eval' and ws: for React refresh / hot reload.
  * - frame-ancestors 'none': nobody can put the site inside an iframe (clickjacking).

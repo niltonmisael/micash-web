@@ -136,7 +136,7 @@ export function PasswordReset() {
           <Button type="submit" block loading={loading} disabled={code.length !== CODE_LENGTH}>
             Continuar
           </Button>
-          <div className="text-muted flex flex-col items-center gap-3 text-lg">
+          <div className="text-muted flex flex-col items-center gap-3 text-base">
             <p>
               Não recebeu?{" "}
               {secondsLeft > 0 ? (
@@ -197,7 +197,7 @@ export function PasswordReset() {
             <Button
               type="button"
               variant="link"
-              className="self-center text-lg"
+              className="self-center text-base"
               onClick={() => setStep("email")}
             >
               Solicitar novo código
@@ -225,7 +225,7 @@ function BackToLogin() {
   return (
     <Link
       href="/entrar"
-      className="text-brand-700 hover:text-brand-800 flex items-center justify-center gap-2 text-xl font-semibold"
+      className="text-brand-700 hover:text-brand-800 flex items-center justify-center gap-2 text-base font-semibold"
     >
       <IconArrowLeft size="1.25rem" aria-hidden />
       Voltar para o login

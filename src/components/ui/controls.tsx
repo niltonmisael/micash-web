@@ -12,7 +12,8 @@ export function Segmented<T extends string | number>({
   onChange,
   label,
   className,
-  activeClass = "bg-brand-600 text-white",
+  activeClass = "bg-surface text-ink shadow-[0_1px_2px_rgb(0_0_0/0.08),0_0_0_1px_rgb(0_0_0/0.04)]",
+  inactiveClass = "text-muted hover:text-ink",
 }: {
   options: { value: T; label: React.ReactNode; activeClass?: string }[];
   value: T;
@@ -20,12 +21,14 @@ export function Segmented<T extends string | number>({
   label: string;
   className?: string;
   activeClass?: string;
+  /** Inactive option colors (override on dark panels). */
+  inactiveClass?: string;
 }) {
   return (
     <div
       role="radiogroup"
       aria-label={label}
-      className={clsx("flex gap-1 rounded-2xl p-1.5", className ?? "bg-brand-50")}
+      className={clsx("flex gap-1 rounded-xl p-1", className ?? "bg-brand-50")}
     >
       {options.map((option) => {
         const active = option.value === value;
@@ -37,8 +40,8 @@ export function Segmented<T extends string | number>({
             aria-checked={active}
             onClick={() => onChange(option.value)}
             className={clsx(
-              "flex flex-1 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-lg font-semibold whitespace-nowrap transition-colors",
-              active ? (option.activeClass ?? activeClass) : "text-muted hover:text-ink",
+              "flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-[0.95rem] font-semibold whitespace-nowrap transition-colors sm:px-4",
+              active ? (option.activeClass ?? activeClass) : inactiveClass,
             )}
           >
             {option.label}
@@ -61,10 +64,10 @@ export function Select({
   const id = useId();
   return (
     <div className={clsx("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className={clsx("text-muted text-base font-medium", hideLabel && "sr-only")}>
+      <label htmlFor={id} className={clsx("text-ink text-sm font-medium", hideLabel && "sr-only")}>
         {label}
       </label>
-      <div className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface relative flex h-16 items-center rounded-2xl border focus-within:ring-4">
+      <div className="border-line hover:border-subtle focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface relative flex h-12 items-center rounded-xl border transition-colors focus-within:ring-4">
         {LeadingIcon && (
           <LeadingIcon
             size="1.3rem"
@@ -75,8 +78,8 @@ export function Select({
         <select
           id={id}
           className={clsx(
-            "text-ink h-full w-full cursor-pointer appearance-none bg-transparent pr-11 text-lg outline-none focus-visible:outline-none",
-            LeadingIcon ? "pl-12" : "pl-5",
+            "text-ink h-full w-full cursor-pointer appearance-none bg-transparent pr-10 text-base outline-none focus-visible:outline-none",
+            LeadingIcon ? "pl-11" : "pl-4",
           )}
           {...props}
         >
@@ -108,7 +111,7 @@ export function Toggle({
 }) {
   return (
     <label className="flex cursor-pointer items-center justify-between gap-4">
-      <span className={clsx("text-ink flex items-center gap-3 text-lg", hideLabel && "sr-only")}>
+      <span className={clsx("text-ink flex items-center gap-3 text-base", hideLabel && "sr-only")}>
         {LeadingIcon && <LeadingIcon size="1.4rem" className="text-brand-700" aria-hidden />}
         {label}
       </span>
@@ -122,15 +125,15 @@ export function Toggle({
         />
         <span
           className={clsx(
-            "peer-focus-visible:ring-brand-500 peer-focus-visible:ring-offset-surface block h-9 w-16 rounded-full transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2",
+            "peer-focus-visible:ring-brand-500 peer-focus-visible:ring-offset-surface block h-7 w-12 rounded-full transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2",
             checked ? "bg-brand-600" : "bg-line",
           )}
           aria-hidden
         />
         <span
           className={clsx(
-            "absolute top-1 left-1 size-7 rounded-full bg-white shadow transition-transform",
-            checked && "translate-x-7",
+            "absolute top-1 left-1 size-5 rounded-full bg-white shadow transition-transform",
+            checked && "translate-x-5",
           )}
           aria-hidden
         />
@@ -159,7 +162,7 @@ export function MoneyInput({
   const id = useId();
   return (
     <div className="flex flex-col items-center gap-1">
-      <label htmlFor={id} className="text-muted text-lg">
+      <label htmlFor={id} className="text-muted text-base">
         {label}
       </label>
       <input
@@ -177,7 +180,7 @@ export function MoneyInput({
         }}
         aria-invalid={error ? true : undefined}
         className={clsx(
-          "w-full bg-transparent text-center text-[3.75rem] leading-tight font-bold tracking-tight tabular-nums outline-none focus-visible:outline-none",
+          "figure w-full bg-transparent text-center text-[3.5rem] leading-tight font-bold outline-none focus-visible:outline-none",
           colorClass,
         )}
       />

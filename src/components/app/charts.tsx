@@ -53,7 +53,7 @@ function TooltipBox({
   lines: { color: string; label: string; value: string }[];
 }) {
   return (
-    <div className="border-line bg-surface rounded-xl border px-4 py-3 shadow-lg">
+    <div className="border-line bg-surface rounded-lg border px-3.5 py-2.5 shadow-[0_12px_30px_-10px_rgb(0_0_0/0.25)]">
       <p className="text-ink font-semibold">{title}</p>
       {lines.map((line) => (
         <p key={line.label} className="text-muted mt-1 flex items-center gap-2 text-sm">
@@ -156,25 +156,27 @@ export function IncomeExpenseChart({ months }: { months: MonthBar[] }) {
         </p>
       )}
       {/* Same data as a table for screen readers (the chart is aria-hidden). */}
-      <table className="sr-only">
-        <caption>Receitas e despesas por mês</caption>
-        <thead>
-          <tr>
-            <th scope="col">Mês</th>
-            <th scope="col">Receitas</th>
-            <th scope="col">Despesas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.key}>
-              <th scope="row">{row.title}</th>
-              <td>{row.locked ? "Disponível no Premium" : formatMoney(row.income ?? 0)}</td>
-              <td>{row.locked ? "Disponível no Premium" : formatMoney(row.expense ?? 0)}</td>
+      <div className="sr-only">
+        <table>
+          <caption>Receitas e despesas por mês</caption>
+          <thead>
+            <tr>
+              <th scope="col">Mês</th>
+              <th scope="col">Receitas</th>
+              <th scope="col">Despesas</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.key}>
+                <th scope="row">{row.title}</th>
+                <td>{row.locked ? "Disponível no Premium" : formatMoney(row.income ?? 0)}</td>
+                <td>{row.locked ? "Disponível no Premium" : formatMoney(row.expense ?? 0)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </figure>
   );
 }
@@ -209,14 +211,14 @@ export function CategoryDonut({ data, total }: { data: ExpenseCategorySummary[];
 
   return (
     <div className="flex flex-col items-center gap-8 sm:flex-row">
-      <div className="relative size-64 shrink-0" aria-hidden>
+      <div className="relative size-52 shrink-0 2xl:size-60" aria-hidden>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={slices}
               dataKey="amount"
               nameKey="name"
-              innerRadius="62%"
+              innerRadius="68%"
               outerRadius="100%"
               startAngle={90}
               endAngle={-270}
@@ -249,14 +251,16 @@ export function CategoryDonut({ data, total }: { data: ExpenseCategorySummary[];
           </PieChart>
         </ResponsiveContainer>
         <div className="pointer-events-none absolute inset-0 grid place-content-center text-center">
-          <span className="text-muted">Despesas</span>
-          <span className="text-ink text-2xl font-bold">{formatMoney(total, { cents: false })}</span>
+          <span className="text-muted text-sm">Despesas</span>
+          <span className="figure text-ink text-[1.6rem] font-bold">
+            {formatMoney(total, { cents: false })}
+          </span>
         </div>
       </div>
-      <ul className="flex w-full flex-col gap-4" aria-label="Despesas por categoria">
+      <ul className="flex w-full min-w-0 flex-col gap-3.5" aria-label="Despesas por categoria">
         {slices.map((s) => (
-          <li key={s.name} className="flex items-center gap-3 text-lg">
-            <span className="size-3.5 shrink-0 rounded" style={{ background: s.color }} aria-hidden />
+          <li key={s.name} className="flex items-center gap-3 text-[0.95rem]">
+            <span className="size-2.5 shrink-0 rounded-full" style={{ background: s.color }} aria-hidden />
             <span className="text-ink flex-1 truncate">{s.name}</span>
             <span className="text-ink font-semibold tabular-nums">
               {formatPercent(Math.round(s.percentage))}
@@ -331,27 +335,29 @@ export function DailyIncomeExpenseChart({ summary, title }: { summary: DailySumm
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <table className="sr-only">
-        <caption>{title}: receitas e despesas por dia</caption>
-        <thead>
-          <tr>
-            <th scope="col">Dia</th>
-            <th scope="col">Receitas</th>
-            <th scope="col">Despesas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows
-            .filter((r) => r.income > 0 || r.expense > 0)
-            .map((r) => (
-              <tr key={r.day}>
-                <th scope="row">{r.day}</th>
-                <td>{formatMoney(r.income)}</td>
-                <td>{formatMoney(r.expense)}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <div className="sr-only">
+        <table>
+          <caption>{title}: receitas e despesas por dia</caption>
+          <thead>
+            <tr>
+              <th scope="col">Dia</th>
+              <th scope="col">Receitas</th>
+              <th scope="col">Despesas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows
+              .filter((r) => r.income > 0 || r.expense > 0)
+              .map((r) => (
+                <tr key={r.day}>
+                  <th scope="row">{r.day}</th>
+                  <td>{formatMoney(r.income)}</td>
+                  <td>{formatMoney(r.expense)}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </figure>
   );
 }

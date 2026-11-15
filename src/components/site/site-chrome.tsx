@@ -1,4 +1,3 @@
-import { IconChartBar } from "@tabler/icons-react";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { ButtonLink } from "@/components/ui/button";
@@ -13,44 +12,64 @@ const NAV = [
   { href: "/#perguntas", label: "Perguntas" },
 ];
 
-/** Public site header. Signed-in visitors (session cookie) get "Ir para o painel" instead of the sign-up CTA. */
+/** Shared width of the public pages: header, sections and footer start and end on the same lines. */
+export const SITE_WRAP = "mx-auto w-full max-w-[84rem] px-4 sm:px-8 lg:px-10";
+
+/**
+ * Public site header, graphite like the hero and the footer. Signed-in visitors (session cookie) get
+ * "Ir para o painel" instead of the sign-up CTA.
+ */
 export async function SiteHeader({ active }: { active?: "planos" }) {
   const signedIn = Boolean((await cookies()).get("micash_rt")?.value);
 
   return (
-    <header className="bg-cream/90 border-line sticky top-0 z-30 border-b backdrop-blur">
-      <div className="mx-auto flex h-24 max-w-7xl items-center justify-between gap-6 px-4 sm:px-8">
-        <Link href="/" aria-label="MiCash, página inicial">
-          <Logo />
+    <header className="bg-rail/95 border-rail-line sticky top-0 z-30 border-b backdrop-blur">
+      <div className={`${SITE_WRAP} flex h-[4.25rem] items-center justify-between gap-3 sm:gap-6`}>
+        <Link href="/" aria-label="MiCash, página inicial" className="shrink-0">
+          <span className="sm:hidden">
+            <Logo tone="light" size="sm" />
+          </span>
+          <span className="hidden sm:block">
+            <Logo tone="light" />
+          </span>
         </Link>
-        <nav aria-label="Site" className="hidden items-center gap-10 lg:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active === "planos" && item.href === "/planos" ? "page" : undefined}
-              className={
-                active === "planos" && item.href === "/planos"
-                  ? "text-brand-700 text-lg font-semibold"
-                  : "text-muted hover:text-ink text-lg"
-              }
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav aria-label="Site" className="hidden items-center gap-8 lg:flex">
+          {NAV.map((item) => {
+            const current = active === "planos" && item.href === "/planos";
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={current ? "page" : undefined}
+                className={
+                  current
+                    ? "text-rail-ink decoration-brand-500 text-[0.95rem] font-semibold underline decoration-2 underline-offset-[0.6rem]"
+                    : "text-rail-muted hover:text-rail-ink text-[0.95rem] transition-colors"
+                }
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 sm:gap-5">
           {signedIn ? (
-            <ButtonLink href="/dashboard" className="h-12 px-5 text-base">
+            <ButtonLink href="/dashboard" className="h-10 px-4 text-[0.95rem]">
               Ir para o painel
             </ButtonLink>
           ) : (
             <>
-              <Link href="/entrar" className="text-ink hover:text-brand-700 text-lg font-semibold">
+              <Link
+                href="/entrar"
+                className="text-rail-ink hover:text-brand-500 px-2.5 py-2.5 text-sm font-semibold transition-colors sm:text-[0.95rem]"
+              >
                 Entrar
               </Link>
-              <ButtonLink href="/cadastro" className="h-12 px-5 text-base">
-                Começar grátis
+              <ButtonLink
+                href="/cadastro"
+                className="h-10 px-3.5 text-sm whitespace-nowrap max-[379px]:hidden sm:px-4 sm:text-[0.95rem]"
+              >
+                Criar conta<span className="hidden sm:inline">&nbsp;grátis</span>
               </ButtonLink>
             </>
           )}
@@ -87,30 +106,25 @@ export function SiteFooter() {
   ];
 
   return (
-    // Always dark, like the prototype, in both themes.
-    <footer className="bg-[#2d2a26] text-[#e9e2db]">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-8">
-        <div className="flex flex-col justify-between gap-10 md:flex-row">
+    // Always graphite, in both themes.
+    <footer className="bg-rail text-rail-muted">
+      <div className={`${SITE_WRAP} pt-16 pb-10`}>
+        <div className="grid gap-12 md:grid-cols-[1fr_auto]">
           <div className="max-w-sm">
-            <span className="inline-flex items-center gap-3">
-              <span
-                className="bg-brand-500 grid size-10 place-items-center rounded-xl text-white"
-                aria-hidden
-              >
-                <IconChartBar size="1.4rem" />
-              </span>
-              <span className="text-2xl font-bold text-white">MiCash</span>
-            </span>
-            <p className="mt-4 text-[#bdb3aa]">Organização financeira pessoal, simples e no seu ritmo.</p>
+            <Logo tone="light" />
+            <p className="mt-4 leading-relaxed">Organização financeira pessoal, simples e no seu ritmo.</p>
           </div>
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-x-14 gap-y-10 sm:grid-cols-3">
             {columns.map((column) => (
               <div key={column.title}>
-                <p className="font-semibold text-white">{column.title}</p>
-                <ul className="mt-4 flex flex-col gap-3">
+                <p className="text-rail-ink text-sm font-semibold">{column.title}</p>
+                <ul className="mt-4 flex flex-col gap-1">
                   {column.links.map((link) => (
                     <li key={link.label}>
-                      <Link href={link.href} className="text-[#bdb3aa] hover:text-white">
+                      <Link
+                        href={link.href}
+                        className="hover:text-rail-ink inline-block py-1.5 transition-colors"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -120,7 +134,7 @@ export function SiteFooter() {
             ))}
           </div>
         </div>
-        <p className="mt-12 border-t border-white/10 pt-6 text-sm text-[#a59c94]">
+        <p className="border-rail-line mt-14 border-t pt-6 text-sm">
           © {new Date().getFullYear()} NILTON MISAEL DA COSTA – TECNOLOGIAS · CNPJ 63.742.180/0001-05 ·
           www.micash.com.br
         </p>

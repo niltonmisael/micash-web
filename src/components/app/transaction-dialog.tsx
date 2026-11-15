@@ -269,7 +269,7 @@ function TransactionForm({
               type="button"
               variant="link"
               onClick={() => setCreatingCategory(true)}
-              className="mt-4 text-lg"
+              className="mt-4 text-base"
             >
               <IconPlus size="1.2rem" aria-hidden /> Criar nova categoria
             </Button>

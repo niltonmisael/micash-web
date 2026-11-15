@@ -125,11 +125,11 @@ export function categoryColor(color: string | null | undefined) {
 
 type Size = "sm" | "md" | "lg";
 const BOX: Record<Size, string> = {
-  sm: "size-10 rounded-xl",
-  md: "size-14 rounded-2xl",
-  lg: "size-16 rounded-2xl",
+  sm: "size-9 rounded-lg",
+  md: "size-11 rounded-xl",
+  lg: "size-13 rounded-xl",
 };
-const ICON: Record<Size, string> = { sm: "1.25rem", md: "1.5rem", lg: "1.75rem" };
+const ICON: Record<Size, string> = { sm: "1.1rem", md: "1.3rem", lg: "1.5rem" };
 
 /** Category (or savings goal) icon on a soft tint of its color. Unknown icons use a tag. */
 export function CategoryIcon({

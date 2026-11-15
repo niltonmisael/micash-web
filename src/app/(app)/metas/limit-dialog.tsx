@@ -80,7 +80,7 @@ function LimitForm({
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-6">
-      <p className="text-muted text-lg">
+      <p className="text-muted text-base">
         Quanto você quer gastar, no máximo, em <strong className="text-ink">{monthLabel(month)}</strong>.
       </p>
       {formError && (
@@ -91,7 +91,7 @@ function LimitForm({
       <ActionError error={apiError} />
 
       {limit ? (
-        <p className="text-ink text-xl font-semibold">{limit.categoryName}</p>
+        <p className="text-ink text-lg font-semibold">{limit.categoryName}</p>
       ) : categories.length === 0 ? (
         <p className="text-muted">Todas as suas categorias já têm limite neste mês.</p>
       ) : (

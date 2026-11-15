@@ -47,14 +47,14 @@ export function Categories() {
         title="Categorias"
         subtitle="Organize suas receitas e despesas"
         actions={
-          <Button onClick={() => setCreating(true)} className="h-16 px-8">
+          <Button onClick={() => setCreating(true)} className="h-12 px-8">
             <IconPlus size="1.4rem" aria-hidden /> Nova categoria
           </Button>
         }
       />
 
       <section aria-labelledby="expense-categories">
-        <h2 id="expense-categories" className="text-ink text-2xl font-bold">
+        <h2 id="expense-categories" className="text-ink text-xl font-bold">
           Despesas <span className="text-subtle font-semibold">· {list.length}</span>
         </h2>
         <div className="mt-5">
@@ -68,8 +68,8 @@ export function Categories() {
             </div>
           ) : list.length === 0 ? (
             <Card className="flex flex-col items-center gap-4 px-6 py-14 text-center">
-              <p className="text-ink text-xl font-semibold">Você ainda não tem categorias de despesa</p>
-              <p className="text-muted text-lg">Crie categorias como Mercado, Moradia ou Transporte.</p>
+              <p className="text-ink text-lg font-semibold">Você ainda não tem categorias de despesa</p>
+              <p className="text-muted text-base">Crie categorias como Mercado, Moradia ou Transporte.</p>
               <Button onClick={() => setCreating(true)}>
                 <IconPlus size="1.3rem" aria-hidden /> Nova categoria
               </Button>
@@ -80,7 +80,7 @@ export function Categories() {
                 <li key={category.id}>
                   <Card className="flex items-center gap-5 px-6 py-5">
                     <CategoryIcon icon={category.icon} color={category.color} />
-                    <p className="text-ink min-w-0 flex-1 truncate text-xl font-semibold">{category.name}</p>
+                    <p className="text-ink min-w-0 flex-1 truncate text-lg font-semibold">{category.name}</p>
                     <ActionMenu
                       horizontal
                       label={`Ações de ${category.name}`}
@@ -105,7 +105,7 @@ export function Categories() {
       </section>
 
       <section aria-labelledby="income-categories">
-        <h2 id="income-categories" className="text-ink text-2xl font-bold">
+        <h2 id="income-categories" className="text-ink text-xl font-bold">
           Receitas <span className="text-subtle font-semibold">· {INCOME_CATEGORIES.length}</span>
         </h2>
         <p className="text-muted mt-1 text-base">
@@ -116,7 +116,7 @@ export function Categories() {
             <li key={value}>
               <Card className="flex items-center gap-5 px-6 py-5">
                 <IncomeIcon category={value} />
-                <p className="text-ink text-xl font-semibold">{INCOME_CATEGORY_LABELS[value]}</p>
+                <p className="text-ink text-lg font-semibold">{INCOME_CATEGORY_LABELS[value]}</p>
               </Card>
             </li>
           ))}

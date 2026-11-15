@@ -98,12 +98,12 @@ export function Transactions() {
   const hasFilters = type !== "all" || category !== "" || search !== "";
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-7">
       <PageHeader
         title="Transações"
         subtitle="Todas as suas receitas e despesas"
         actions={
-          <Button onClick={() => setCreating(true)} className="h-16 px-8">
+          <Button onClick={() => setCreating(true)} className="h-12 px-8">
             <IconPlus size="1.4rem" aria-hidden /> Nova transação
           </Button>
         }
@@ -159,7 +159,7 @@ export function Transactions() {
             </optgroup>
           )}
         </Select>
-        <label className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface flex h-16 min-w-60 flex-1 items-center gap-3 rounded-2xl border px-4 focus-within:ring-4">
+        <label className="border-line focus-within:border-brand-500 focus-within:ring-brand-100 bg-surface flex h-12 min-w-60 flex-1 items-center gap-3 rounded-2xl border px-4 focus-within:ring-4">
           <IconSearch size="1.3rem" className="text-subtle" aria-hidden />
           <span className="sr-only">Buscar transação</span>
           <input
@@ -167,7 +167,7 @@ export function Transactions() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Buscar transação"
-            className="text-ink placeholder:text-subtle h-full w-full bg-transparent text-lg outline-none focus-visible:outline-none"
+            className="text-ink placeholder:text-subtle h-full w-full bg-transparent text-base outline-none focus-visible:outline-none"
           />
         </label>
       </div>
@@ -180,7 +180,7 @@ export function Transactions() {
         ) : query.isPending ? (
           <div className="flex flex-col gap-3 py-4">
             {Array.from({ length: 6 }, (_, i) => (
-              <Skeleton key={i} className="h-16" />
+              <Skeleton key={i} className="h-12" />
             ))}
           </div>
         ) : result && result.data.length > 0 ? (
@@ -190,7 +190,7 @@ export function Transactions() {
             >
               <caption className="sr-only">Transações do mês</caption>
               <thead className="hidden md:table-header-group">
-                <tr className="text-muted border-line border-b text-left text-base">
+                <tr className="text-muted border-line border-b text-left text-sm">
                   <th scope="col" className="py-4 pr-4 font-medium">
                     Data
                   </th>
@@ -235,10 +235,10 @@ export function Transactions() {
           </>
         ) : (
           <div className="flex flex-col items-center gap-4 py-16 text-center">
-            <p className="text-ink text-xl font-semibold">
+            <p className="text-ink text-lg font-semibold">
               {hasFilters ? "Nenhuma transação encontrada" : "Nenhuma transação neste mês"}
             </p>
-            <p className="text-muted text-lg">
+            <p className="text-muted text-base">
               {hasFilters
                 ? "Tente outro filtro ou limpe a busca."
                 : "Registre uma receita ou despesa para começar."}
@@ -297,35 +297,35 @@ function TransactionRow({
 
   return (
     <tr className="border-line border-b last:border-b-0">
-      <td className="text-muted hidden py-4 pr-4 text-lg whitespace-nowrap md:table-cell">
+      <td className="text-muted hidden py-3 pr-4 text-[0.95rem] whitespace-nowrap md:table-cell">
         {relativeDayKey(t.date)}
       </td>
-      <td className="py-4 pr-4">
-        <div className="flex items-center gap-4">
+      <td className="py-3 pr-3 max-md:w-full max-md:max-w-0 md:pr-4">
+        <div className="flex items-center gap-3">
           {isIncome ? (
             <IncomeIcon category={t.incomeCategory} />
           ) : (
             <CategoryIcon icon={t.categoryIcon} color={t.categoryColor} />
           )}
           <div className="min-w-0">
-            <p className="text-ink truncate text-lg font-semibold">{t.title}</p>
+            <p className="text-ink truncate text-base font-medium">{t.title}</p>
             {/* Small screens: date and category under the title instead of their own columns. */}
-            <p className="text-muted text-base md:hidden">
+            <p className="text-muted text-sm md:hidden">
               {relativeDayKey(t.date)} · {categoryLabel}
             </p>
             {pending && <p className="text-warning-ink text-sm font-semibold">Pendente</p>}
           </div>
         </div>
       </td>
-      <td className="hidden py-4 pr-4 md:table-cell">
-        <span className="bg-brand-50 text-ink inline-block rounded-full px-4 py-1.5 text-base font-medium">
+      <td className="hidden py-3 pr-4 md:table-cell">
+        <span className="bg-brand-50 text-ink inline-block rounded-md px-2.5 py-1 text-sm font-medium">
           {categoryLabel}
         </span>
       </td>
-      <td className="text-muted hidden py-4 pr-4 text-lg lg:table-cell">{detail}</td>
+      <td className="text-muted hidden py-3 pr-4 text-[0.95rem] lg:table-cell">{detail}</td>
       <td
         className={clsx(
-          "py-4 pr-4 text-right text-lg font-semibold whitespace-nowrap tabular-nums",
+          "py-3 pr-1 text-right text-base font-semibold whitespace-nowrap tabular-nums md:pr-4",
           isIncome ? "text-income" : "text-expense",
         )}
       >
@@ -333,7 +333,7 @@ function TransactionRow({
         <span aria-hidden>{isIncome ? "+ " : "− "}</span>
         {formatMoney(t.amount)}
       </td>
-      <td className="py-4 text-right">
+      <td className="py-3 text-right">
         <ActionMenu
           label={`Ações de ${t.title}`}
           items={[
@@ -368,7 +368,7 @@ function Pagination({
       aria-label="Paginação"
       className="border-line mt-2 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
     >
-      <p className="text-muted text-lg">
+      <p className="text-muted text-[0.95rem]">
         Mostrando {shown} de {total} {total === 1 ? "transação" : "transações"}
       </p>
       {totalPages > 1 && (
@@ -411,8 +411,8 @@ function PageButton({
       aria-label={label}
       aria-current={active ? "page" : undefined}
       className={clsx(
-        "min-w-12 rounded-full px-4 py-2.5 text-lg font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40",
-        active ? "bg-brand-600 text-white" : "bg-brand-50 text-ink hover:bg-brand-100",
+        "h-10 min-w-10 rounded-lg px-3 text-[0.95rem] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+        active ? "bg-ink text-cream" : "text-ink hover:bg-brand-50",
       )}
     >
       {children}
